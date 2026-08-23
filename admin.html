@@ -306,6 +306,12 @@
 
     <!-- TAB CONFIG -->
     <div id="tab-config" class="tab-content">
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;max-width:400px;margin-bottom:20px">
+        <h3 style="font-family:var(--font-d);font-weight:800;margin-bottom:4px">🔍 Testar conexão com o banco</h3>
+        <p style="font-size:.82rem;color:rgba(255,255,255,.45);margin-bottom:16px">Mostra na tela o que a API /api/images está retornando, para ajudar a diagnosticar problemas.</p>
+        <button class="btn-upload" style="width:100%;padding:12px;font-size:.9rem" onclick="testarConexao()">🔍 Testar agora</button>
+        <pre id="teste-resultado" style="display:none;margin-top:14px;background:rgba(0,0,0,.3);border-radius:8px;padding:12px;font-size:.75rem;white-space:pre-wrap;word-break:break-word;max-height:300px;overflow:auto"></pre>
+      </div>
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;max-width:400px">
         <h3 style="font-family:var(--font-d);font-weight:800;margin-bottom:4px">🗑️ Limpar todas as imagens</h3>
         <p style="font-size:.82rem;color:rgba(255,255,255,.45);margin-bottom:16px">Remove todas as fotos salvas. O site voltará a mostrar os ícones padrão.</p>
@@ -485,6 +491,36 @@
       }
     } catch(err){
       showToast('Erro de conexão: ' + err.message,'error');
+    }
+  }
+
+  async function testarConexao(){
+    const box = document.getElementById('teste-resultado');
+    box.style.display = 'block';
+    box.textContent = 'Testando...';
+    try{
+      const resp = await fetch('/api/images');
+      const text = await resp.text();
+      let linhas = [`Status HTTP: ${resp.status}`, ''];
+      try{
+        const json = JSON.parse(text);
+        if(json.ok){
+          const chaves = Object.keys(json.images || {});
+          linhas.push(`✅ Conectou! Imagens salvas no banco: ${chaves.length}`);
+          if(chaves.length){
+            linhas.push('Chaves encontradas: ' + chaves.join(', '));
+          }
+        } else {
+          linhas.push('❌ Erro retornado pela API:');
+          linhas.push(json.error || '(sem mensagem de erro)');
+        }
+      } catch(e){
+        linhas.push('❌ A resposta não é um JSON válido (provável erro de servidor). Conteúdo bruto:');
+        linhas.push(text.slice(0, 500));
+      }
+      box.textContent = linhas.join('\n');
+    } catch(err){
+      box.textContent = '❌ Erro de conexão: ' + err.message;
     }
   }
 
