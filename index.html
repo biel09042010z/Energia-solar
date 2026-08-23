@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SolarVida Energia | Painéis Solares em Teresina e região</title>
+  <meta name="description" content="Economize até 95% na sua conta de energia com energia solar fotovoltaica. Projetos residenciais, comerciais e rurais em Teresina e todo o Piauí." />
+  <meta name="keywords" content="energia solar, painel solar, fotovoltaico, Teresina, Piauí, economia energia" />
+  <meta property="og:title" content="SolarVida Energia | Energia Solar em Teresina" />
+  <meta property="og:description" content="Economize até 95% na sua conta de energia. Orçamento grátis!" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root{--navy:#0A1628;--navy-2:#112240;--amber:#F59E0B;--amber-d:#D97706;--green:#10B981;--off-white:#F8FAFC;--gray:#64748B;--gray-l:#CBD5E1;--white:#fff;--font-display:'Syne',sans-serif;--font-body:'Inter',sans-serif;--r-sm:8px;--r-md:14px;--r-lg:20px;--r-xl:32px;--shadow-sm:0 1px 3px rgba(0,0,0,.12);--shadow-md:0 4px 20px rgba(0,0,0,.18);--shadow-lg:0 12px 48px rgba(0,0,0,.28);--transition:.25s cubic-bezier(.4,0,.2,1)}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-body);background:var(--off-white);color:var(--navy);line-height:1.6;overflow-x:hidden}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    ul{list-style:none}
+    button,input,select,textarea{font-family:inherit}
+
+    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px}
+    .section{padding:80px 0}
+    .section-dark{background:var(--navy);color:var(--white)}
+    .section-gray{background:#EEF2F7}
+    .badge{display:inline-block;background:rgba(245,158,11,.15);color:var(--amber-d);font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:12px}
+    .section-dark .badge{background:rgba(245,158,11,.2);color:var(--amber)}
+    .section-title{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;line-height:1.2;margin-bottom:16px}
+    .section-subtitle{font-size:1.05rem;color:var(--gray);max-width:580px}
+    .section-dark .section-subtitle{color:var(--gray-l)}
+    .section-header{margin-bottom:52px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:var(--r-md);font-weight:600;font-size:.95rem;cursor:pointer;border:none;transition:var(--transition);white-space:nowrap}
+    .btn-primary{background:var(--amber);color:var(--navy)}
+    .btn-primary:hover{background:var(--amber-d);transform:translateY(-2px);box-shadow:0 6px 24px rgba(245,158,11,.4)}
+    .btn-outline{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,.4)}
+    .btn-outline:hover{border-color:var(--amber);color:var(--amber)}
+    .btn-green{background:var(--green);color:var(--white)}
+    .btn-green:hover{background:#059669;transform:translateY(-2px);box-shadow:0 6px 24px rgba(16,185,129,.4)}
+
+    /* NAVBAR */
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:transparent;transition:background var(--transition),box-shadow var(--transition)}
+    .navbar.scrolled{background:rgba(10,22,40,.96);backdrop-filter:blur(12px);box-shadow:0 2px 20px rgba(0,0,0,.3)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px}
+    .nav-logo{display:flex;align-items:center;gap:10px;color:var(--white);font-family:var(--font-display);font-size:1.3rem;font-weight:800}
+    .nav-logo-icon{width:36px;height:36px;background:var(--amber);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--navy);font-size:1.1rem}
+    .nav-links{display:flex;align-items:center;gap:28px}
+    .nav-links a{color:rgba(255,255,255,.8);font-size:.9rem;font-weight:500;transition:color var(--transition)}
+    .nav-links a:hover{color:var(--amber)}
+    .nav-cta{display:flex;gap:10px;align-items:center}
+    .nav-cta .btn{padding:10px 20px;font-size:.85rem}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px;color:var(--white);font-size:1.6rem;line-height:1}
+    .mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:var(--navy-2);padding:20px;z-index:999;flex-direction:column;gap:4px;box-shadow:var(--shadow-lg)}
+    .mobile-menu.open{display:flex}
+    .mobile-menu a{color:rgba(255,255,255,.85);padding:12px 16px;border-radius:var(--r-sm);font-weight:500;transition:background var(--transition)}
+    .mobile-menu a:hover{background:rgba(255,255,255,.08);color:var(--amber)}
+    .mobile-menu .btn{margin-top:8px;justify-content:center}
+
+    /* HERO */
+    .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;background:var(--navy);overflow:hidden}
+    .hero-aurora{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 40%,rgba(245,158,11,.22) 0%,transparent 65%),radial-gradient(ellipse 50% 40% at 80% 70%,rgba(16,185,129,.12) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 30% 80%,rgba(245,158,11,.08) 0%,transparent 60%);animation:aurora 8s ease-in-out infinite alternate}
+    @keyframes aurora{0%{opacity:.8;transform:scale(1)}100%{opacity:1;transform:scale(1.04)}}
+    .hero-grid-overlay{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:48px 48px}
+    .hero-main{position:relative;z-index:2;flex:1;display:flex;align-items:center}
+    .hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:120px 0 60px}
+    .hero-content{color:var(--white)}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:var(--amber);font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;border-radius:100px;margin-bottom:24px}
+    .hero-title{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.6rem);font-weight:800;line-height:1.1;margin-bottom:20px}
+    .hero-title .accent{color:var(--amber)}
+    .hero-sub{font-size:1.05rem;color:rgba(255,255,255,.7);margin-bottom:36px;max-width:480px}
+    .hero-buttons{display:flex;gap:14px;flex-wrap:wrap}
+    .hero-stats{display:flex;gap:32px;margin-top:52px;padding-top:32px;border-top:1px solid rgba(255,255,255,.1);flex-wrap:wrap}
+    .hero-stat-num{font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--amber)}
+    .hero-stat-label{font-size:.8rem;color:rgba(255,255,255,.6);margin-top:2px}
+    .hero-visual{position:relative;display:flex;align-items:center;justify-content:center}
+    .hero-img-wrap{position:relative;width:100%;border-radius:var(--r-xl);overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.5)}
+
+    /* Imagem hero — mostra foto se existir, SVG como fallback */
+    .hero-img-bg{width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,#1a3a5c 0%,#0d2137 40%,#1a4a2e 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .hero-img-bg img.site-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .hero-img-bg .svg-fallback{width:85%;opacity:.9;position:relative;z-index:1}
+
+    /* Imagens das seções — wrapper genérico */
+    .sec-img-wrap{width:100%;overflow:hidden;border-radius:var(--r-xl);position:relative}
+    .sec-img-inner{width:100%;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .sec-img-inner img.site-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:var(--r-xl)}
+    .sec-img-inner .emoji-fallback{font-size:5rem;position:relative;z-index:1}
+    .sec-img-inner.sobre-bg{background:linear-gradient(135deg,var(--navy) 0%,#1a3a5c 100%)}
+    .sobre-badge-wrap{position:absolute;bottom:24px;left:24px;background:var(--amber);color:var(--navy);border-radius:var(--r-md);padding:14px 20px;font-weight:700;box-shadow:var(--shadow-md);z-index:2}
+    .sobre-badge-num{font-family:var(--font-display);font-size:2rem;font-weight:800;line-height:1}
+    .sobre-badge-txt{font-size:.8rem;margin-top:2px}
+
+    /* Cards de solução com imagem */
+    .solucao-img{height:180px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden}
+    .solucao-img.residencial{background:linear-gradient(135deg,#1a3a5c,#0a2a4a)}
+    .solucao-img.comercial{background:linear-gradient(135deg,#1a4030,#0a2a1e)}
+    .solucao-img.rural{background:linear-gradient(135deg,#3a2a0a,#2a1a00)}
+    .solucao-img img.site-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .solucao-img .emoji-fallback{position:relative;z-index:1}
+
+    /* Cards de serviço com imagem */
+    .service-card-img{height:140px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:-28px -24px 20px;border-radius:var(--r-lg) var(--r-lg) 0 0;overflow:hidden;background:rgba(0,0,0,.2);position:relative}
+    .service-card-img img.site-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .service-card-img .emoji-fallback{position:relative;z-index:1}
+
+    .hero-float-card{position:absolute;background:var(--white);border-radius:var(--r-md);padding:14px 18px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:12px}
+    .hero-float-card.card-1{bottom:-16px;left:-20px}
+    .hero-float-card.card-2{top:-16px;right:-20px}
+    .hero-float-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+    .hero-float-icon.green{background:rgba(16,185,129,.15);color:var(--green)}
+    .hero-float-icon.amber{background:rgba(245,158,11,.15);color:var(--amber-d)}
+    .hero-float-text strong{display:block;font-size:.85rem;font-weight:600;color:var(--navy)}
+    .hero-float-text span{font-size:.75rem;color:var(--gray)}
+    .hero-benefits{position:relative;z-index:2;background:rgba(255,255,255,.05);border-top:1px solid rgba(255,255,255,.08)}
+    .hero-benefits-inner{display:flex}
+    .hero-benefit{flex:1;display:flex;align-items:center;gap:14px;padding:22px 24px;color:var(--white);border-right:1px solid rgba(255,255,255,.08)}
+    .hero-benefit:last-child{border-right:none}
+    .hero-benefit-icon{width:44px;height:44px;flex-shrink:0;background:rgba(245,158,11,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+    .hero-benefit-text strong{display:block;font-size:.9rem;font-weight:600}
+    .hero-benefit-text span{font-size:.78rem;color:rgba(255,255,255,.55)}
+
+    /* SIMULADOR */
+    .simulator-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+    .sim-card{background:var(--white);border-radius:var(--r-lg);padding:36px;box-shadow:var(--shadow-md);border:1px solid rgba(0,0,0,.06)}
+    .sim-form-title{font-family:var(--font-display);font-size:1.3rem;font-weight:800;margin-bottom:24px;display:flex;align-items:center;gap:10px}
+    .form-group{margin-bottom:18px}
+    .form-group label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px;color:var(--navy)}
+    .form-group label span{color:var(--gray);font-weight:400}
+    .form-control{width:100%;padding:12px 16px;border:2px solid var(--gray-l);border-radius:var(--r-sm);font-size:.95rem;color:var(--navy);background:var(--white);transition:border-color var(--transition);appearance:none}
+    .form-control:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgba(245,158,11,.15)}
+    .input-prefix-wrap{position:relative}
+    .input-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--gray);font-weight:600;font-size:.9rem;pointer-events:none}
+    .input-prefix+.form-control{padding-left:38px}
+    .btn-simulate{width:100%;padding:16px;font-size:1rem;justify-content:center;margin-top:8px}
+    .sim-result{background:var(--navy);border-radius:var(--r-lg);padding:36px;color:var(--white);box-shadow:var(--shadow-lg);position:sticky;top:88px}
+    .sim-result-title{font-family:var(--font-display);font-size:1.2rem;font-weight:800;margin-bottom:6px}
+    .sim-result-sub{font-size:.85rem;color:rgba(255,255,255,.55);margin-bottom:28px}
+    .sim-placeholder{text-align:center;padding:40px 20px;color:rgba(255,255,255,.35)}
+    .sim-placeholder .ph-icon{font-size:3rem;margin-bottom:16px;display:block;color:rgba(245,158,11,.3)}
+    .sim-placeholder p{font-size:.9rem}
+    .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+    .result-item{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-sm);padding:16px}
+    .result-item.highlight{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.3)}
+    .result-item.full{grid-column:1/-1}
+    .result-label{font-size:.72rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+    .result-value{font-family:var(--font-display);font-size:1.35rem;font-weight:800;color:var(--white)}
+    .result-item.highlight .result-value{color:var(--amber)}
+    .result-note{font-size:.72rem;color:rgba(255,255,255,.4);margin-top:4px}
+    .sim-divider{border:none;border-top:1px solid rgba(255,255,255,.1);margin:20px 0}
+    .sim-disclaimer{font-size:.75rem;color:rgba(255,255,255,.4);margin-bottom:20px;line-height:1.5}
+    .btn-wa-sim{width:100%;justify-content:center;padding:14px;font-size:.95rem}
+
+    /* SOBRE */
+    .sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+    .sobre-items{display:flex;flex-direction:column;gap:20px;margin-top:28px}
+    .sobre-item{display:flex;gap:16px;align-items:flex-start}
+    .sobre-item-icon{width:44px;height:44px;flex-shrink:0;background:rgba(245,158,11,.12);color:var(--amber-d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+    .sobre-item h4{font-weight:600;margin-bottom:4px}
+    .sobre-item p{font-size:.9rem;color:var(--gray)}
+
+    /* SERVIÇOS */
+    .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .service-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:28px 24px;transition:var(--transition);overflow:hidden}
+    .service-card:hover{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.3);transform:translateY(-4px)}
+    .service-card h3{font-weight:700;margin-bottom:8px;font-size:1rem}
+    .service-card p{font-size:.88rem;color:rgba(255,255,255,.55);line-height:1.6}
+
+    /* SOLUÇÕES */
+    .solucoes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .solucao-card{background:var(--white);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid rgba(0,0,0,.06);transition:var(--transition)}
+    .solucao-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+    .solucao-body{padding:24px}
+    .solucao-body h3{font-family:var(--font-display);font-weight:800;font-size:1.2rem;margin-bottom:8px}
+    .solucao-body p{font-size:.88rem;color:var(--gray);margin-bottom:16px}
+    .solucao-tags{display:flex;gap:8px;flex-wrap:wrap}
+    .solucao-tag{font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:100px;background:rgba(245,158,11,.1);color:var(--amber-d)}
+
+    /* COMO FUNCIONA */
+    .como-flow{display:flex;align-items:center;justify-content:center;margin-bottom:60px;flex-wrap:wrap;gap:0}
+    .flow-step{display:flex;flex-direction:column;align-items:center;text-align:center;flex:1;min-width:80px}
+    .flow-icon{width:64px;height:64px;background:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:var(--shadow-md);border:3px solid var(--amber);margin-bottom:10px;position:relative;z-index:1}
+    .flow-label{font-size:.8rem;font-weight:600;color:var(--navy)}
+    .flow-arrow{font-size:1.2rem;color:var(--amber);margin:0 -8px;margin-bottom:34px;flex-shrink:0}
+    .etapas-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+    .etapa-card{background:var(--white);border-radius:var(--r-md);padding:24px 20px;text-align:center;border:1px solid rgba(0,0,0,.06);box-shadow:var(--shadow-sm);position:relative}
+    .etapa-num{position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:28px;height:28px;background:var(--amber);color:var(--navy);border-radius:50%;font-weight:800;font-size:.85rem;display:flex;align-items:center;justify-content:center}
+    .etapa-icon{font-size:1.6rem;margin:8px 0 10px}
+    .etapa-card h4{font-weight:700;font-size:.9rem;margin-bottom:6px}
+    .etapa-card p{font-size:.78rem;color:var(--gray);line-height:1.5}
+
+    /* FAQ */
+    .faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+    .faq-item{background:var(--white);border-radius:var(--r-md);border:1px solid rgba(0,0,0,.07);overflow:hidden}
+    .faq-question{width:100%;display:flex;justify-content:space-between;align-items:center;padding:20px 24px;cursor:pointer;font-weight:600;font-size:.95rem;background:none;border:none;text-align:left;color:var(--navy);gap:16px}
+    .faq-chevron{color:var(--amber);font-size:.9rem;flex-shrink:0;transition:transform var(--transition);display:inline-block}
+    .faq-item.open .faq-chevron{transform:rotate(180deg)}
+    .faq-answer{display:none;padding:0 24px 20px;font-size:.9rem;color:var(--gray);line-height:1.7}
+    .faq-item.open .faq-answer{display:block}
+
+    /* CONTATO */
+    .contato-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:start}
+    .contato-items{display:flex;flex-direction:column;gap:16px}
+    .contato-item{display:flex;align-items:center;gap:14px;color:rgba(255,255,255,.8);font-size:.9rem}
+    .contato-item-icon{width:40px;height:40px;flex-shrink:0;background:rgba(245,158,11,.15);color:var(--amber);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+    .contato-item a{color:rgba(255,255,255,.8);transition:color var(--transition)}
+    .contato-item a:hover{color:var(--amber)}
+    .contato-form-card{background:var(--white);border-radius:var(--r-lg);padding:36px}
+    .contato-form-card h3{font-family:var(--font-display);font-weight:800;font-size:1.2rem;margin-bottom:20px;color:var(--navy)}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .mt14{margin-top:14px}
+    .mt18{margin-top:18px}
+    textarea.form-control{resize:vertical;min-height:110px}
+
+    /* FOOTER */
+    .footer{background:#060e1a;color:rgba(255,255,255,.6);padding:52px 0 24px}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+    .footer-logo{display:flex;align-items:center;gap:10px;color:var(--white);font-family:var(--font-display);font-size:1.2rem;font-weight:800;margin-bottom:12px}
+    .footer-logo-icon{width:32px;height:32px;background:var(--amber);border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--navy);font-size:1rem}
+    .footer-desc{font-size:.85rem;line-height:1.7;margin-bottom:16px}
+    .footer-social{display:flex;gap:10px}
+    .footer-social a{width:36px;height:36px;background:rgba(255,255,255,.08);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);font-size:1rem;transition:var(--transition)}
+    .footer-social a:hover{background:var(--amber);color:var(--navy)}
+    .footer-col h4{color:var(--white);font-weight:700;font-size:.9rem;margin-bottom:14px}
+    .footer-col ul{display:flex;flex-direction:column;gap:8px}
+    .footer-col ul li a{font-size:.85rem;color:rgba(255,255,255,.55);transition:color var(--transition)}
+    .footer-col ul li a:hover{color:var(--amber)}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-size:.8rem}
+
+    /* CADEADO ADMIN */
+    .admin-lock{opacity:.25;transition:opacity .3s;font-size:.75rem;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:5px;cursor:pointer;user-select:none}
+    .admin-lock:hover{opacity:1;color:var(--amber)}
+
+    /* WA FLUTUANTE */
+    .wa-float{position:fixed;bottom:28px;right:24px;z-index:9000;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+    .wa-bubble{background:var(--white);border-radius:var(--r-md);padding:12px 16px;box-shadow:var(--shadow-lg);font-size:.85rem;font-weight:600;color:var(--navy);max-width:200px;display:none;animation:slideIn .3s ease}
+    @keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .wa-float:hover .wa-bubble{display:block}
+    .wa-btn{width:58px;height:58px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:1.7rem;box-shadow:0 4px 24px rgba(37,211,102,.5);transition:var(--transition);cursor:pointer;text-decoration:none}
+    .wa-btn:hover{transform:scale(1.1);box-shadow:0 6px 32px rgba(37,211,102,.6)}
+    .wa-pulse{position:absolute;width:58px;height:58px;border-radius:50%;background:rgba(37,211,102,.4);animation:pulse 2s ease-out infinite}
+    @keyframes pulse{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.7);opacity:0}}
+
+    /* RESPONSIVE */
+    @media(max-width:1024px){
+      .hero-inner{grid-template-columns:1fr;gap:40px;padding:110px 0 60px}
+      .hero-visual{order:-1;max-width:460px;margin:0 auto}
+      .hero-float-card.card-1{bottom:-10px;left:0}
+      .hero-float-card.card-2{top:-10px;right:0}
+      .simulator-grid{grid-template-columns:1fr}
+      .sim-result{position:static}
+      .sobre-grid{grid-template-columns:1fr}
+      .services-grid{grid-template-columns:repeat(2,1fr)}
+      .etapas-grid{grid-template-columns:repeat(3,1fr)}
+      .footer-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:768px){
+      .section{padding:60px 0}
+      .nav-links,.nav-cta{display:none}
+      .hamburger{display:block}
+      .hero-benefits-inner{flex-direction:column}
+      .hero-benefit{border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}
+      .hero-benefit:last-child{border-bottom:none}
+      .hero-float-card{display:none}
+      .solucoes-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto}
+      .contato-grid{grid-template-columns:1fr}
+      .form-row{grid-template-columns:1fr}
+      .services-grid{grid-template-columns:1fr}
+      .etapas-grid{grid-template-columns:repeat(2,1fr)}
+      .como-flow{gap:4px}
+      .footer-grid{grid-template-columns:1fr;gap:28px}
+      .footer-bottom{flex-direction:column;gap:8px;text-align:center}
+      .result-grid{grid-template-columns:1fr}
+      .hero-stats{gap:20px}
+    }
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+  </style>
+</head>
+<body>
+
+<script>
+  const EMPRESA={nome:"SolarVida Energia",whatsapp:"5586999990000",email:"contato@solarvida.com.br",telefone:"(86) 99999-0000",endereco:"Av. Frei Serafim, 2510 – Centro, Teresina – PI",horario:"Seg–Sex: 8h–18h | Sáb: 8h–12h",instagram:"https://instagram.com/solarvidaenergia",facebook:"https://facebook.com/solarvidaenergia",youtube:"https://youtube.com/@solarvidaenergia",projetosRealizados:"500+",kwpInstalados:"4.200+",anosExperiencia:"8"};
+  function waLink(m){return`https://wa.me/${EMPRESA.whatsapp}?text=${encodeURIComponent(m)}`}
+
+  /* ── Carrega imagens salvas pelo admin ── */
+  function loadSiteImages(){
+    const imgs={
+      'hero':'img-hero','sobre':'img-sobre',
+      'srv-projeto':'img-srv-projeto','srv-instalacao':'img-srv-instalacao',
+      'srv-manutencao':'img-srv-manutencao','srv-limpeza':'img-srv-limpeza',
+      'srv-monitoramento':'img-srv-monitoramento','srv-homologacao':'img-srv-homologacao',
+      'sol-residencial':'img-sol-residencial','sol-comercial':'img-sol-comercial','sol-rural':'img-sol-rural'
+    };
+    Object.entries(imgs).forEach(([key,id])=>{
+      const data=localStorage.getItem('sv_img_'+key);
+      const el=document.getElementById(id);
+      if(data&&el){el.src=data;el.style.display='block'}
+    });
+  }
+</script>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar" aria-label="Menu principal">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#inicio" class="nav-logo"><div class="nav-logo-icon">☀️</div><span>SolarVida</span></a>
+      <ul class="nav-links">
+        <li><a href="#simulador">Simulador</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#solucoes">Soluções</a></li>
+        <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#simulador" class="btn btn-outline">Simular</a>
+        <a href="#contato" class="btn btn-primary" id="hero-btn-orcamento">⚡ Orçamento</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span id="hicon">☰</span></button>
+    </div>
+  </div>
+</nav>
+<nav class="mobile-menu" id="mobile-menu">
+  <a href="#simulador" onclick="closeMobile()">Simulador</a>
+  <a href="#sobre" onclick="closeMobile()">Sobre</a>
+  <a href="#servicos" onclick="closeMobile()">Serviços</a>
+  <a href="#solucoes" onclick="closeMobile()">Soluções</a>
+  <a href="#como-funciona" onclick="closeMobile()">Como funciona</a>
+  <a href="#faq" onclick="closeMobile()">FAQ</a>
+  <a href="#contato" onclick="closeMobile()">Contato</a>
+  <a href="#contato" class="btn btn-primary" onclick="closeMobile()">⚡ Orçamento</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="inicio" class="hero">
+  <div class="hero-aurora" aria-hidden="true"></div>
+  <div class="hero-grid-overlay" aria-hidden="true"></div>
+  <div class="hero-main">
+    <div class="container" style="width:100%">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <div class="hero-badge">⭐ Instalador Certificado ABSOLAR</div>
+          <h1 class="hero-title">Economize na sua<br>conta de energia com<br><span class="accent">energia solar</span></h1>
+          <p class="hero-sub">Projetos fotovoltaicos residenciais, comerciais e rurais em todo o Piauí. Até 95% de redução na sua conta de luz com garantia de 25 anos.</p>
+          <div class="hero-buttons">
+            <a href="#contato" class="btn btn-primary" id="btn-orcamento-hero">💰 Solicitar Orçamento</a>
+            <a href="#simulador" class="btn btn-outline">🧮 Simular Economia</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat"><div class="hero-stat-num" id="stat-projetos">500+</div><div class="hero-stat-label">Projetos entregues</div></div>
+            <div class="hero-stat"><div class="hero-stat-num" id="stat-kwp">4.200+</div><div class="hero-stat-label">kWp instalados</div></div>
+            <div class="hero-stat"><div class="hero-stat-num" id="stat-anos">8 anos</div><div class="hero-stat-label">de experiência</div></div>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-img-wrap">
+            <div class="hero-img-bg">
+              <img id="img-hero" class="site-img" src="" alt="Painéis solares" style="display:none" />
+              <svg class="svg-fallback" id="svg-hero" viewBox="0 0 420 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="340" cy="60" r="36" fill="#F59E0B" opacity=".9"/>
+                <g stroke="#F59E0B" stroke-width="2.5" opacity=".5"><line x1="340" y1="14" x2="340" y2="6"/><line x1="340" y1="114" x2="340" y2="106"/><line x1="294" y1="60" x2="286" y2="60"/><line x1="394" y1="60" x2="386" y2="60"/><line x1="307" y1="27" x2="301" y2="21"/><line x1="379" y1="99" x2="373" y2="93"/><line x1="373" y1="27" x2="379" y2="21"/><line x1="301" y1="99" x2="307" y2="93"/></g>
+                <polygon points="40,210 210,110 380,210" fill="#1a3a5c" stroke="#2a5080" stroke-width="1.5"/>
+                <g opacity=".95">
+                  <rect x="100" y="155" width="60" height="36" rx="3" fill="#1e4976" stroke="#F59E0B" stroke-width="1.2"/><line x1="130" y1="155" x2="130" y2="191" stroke="#F59E0B" stroke-width=".6" opacity=".6"/><line x1="100" y1="173" x2="160" y2="173" stroke="#F59E0B" stroke-width=".6" opacity=".6"/>
+                  <rect x="170" y="145" width="60" height="36" rx="3" fill="#1e4976" stroke="#F59E0B" stroke-width="1.2"/><line x1="200" y1="145" x2="200" y2="181" stroke="#F59E0B" stroke-width=".6" opacity=".6"/><line x1="170" y1="163" x2="230" y2="163" stroke="#F59E0B" stroke-width=".6" opacity=".6"/>
+                  <rect x="240" y="155" width="60" height="36" rx="3" fill="#1e4976" stroke="#F59E0B" stroke-width="1.2"/><line x1="270" y1="155" x2="270" y2="191" stroke="#F59E0B" stroke-width=".6" opacity=".6"/><line x1="240" y1="173" x2="300" y2="173" stroke="#F59E0B" stroke-width=".6" opacity=".6"/>
+                  <rect x="120" y="196" width="60" height="36" rx="3" fill="#1e4976" stroke="#F59E0B" stroke-width="1.2"/><line x1="150" y1="196" x2="150" y2="232" stroke="#F59E0B" stroke-width=".6" opacity=".6"/><line x1="120" y1="214" x2="180" y2="214" stroke="#F59E0B" stroke-width=".6" opacity=".6"/>
+                  <rect x="190" y="196" width="60" height="36" rx="3" fill="#1e4976" stroke="#F59E0B" stroke-width="1.2"/><line x1="220" y1="196" x2="220" y2="232" stroke="#F59E0B" stroke-width=".6" opacity=".6"/><line x1="190" y1="214" x2="250" y2="214" stroke="#F59E0B" stroke-width=".6" opacity=".6"/>
+                </g>
+                <rect x="120" y="210" width="180" height="100" fill="#112240"/>
+                <rect x="190" y="255" width="40" height="55" rx="4" fill="#0a1628"/><circle cx="225" cy="285" r="3" fill="#F59E0B"/>
+                <rect x="130" y="235" width="36" height="28" rx="3" fill="#1e4976" stroke="#F59E0B" stroke-width=".8"/>
+                <rect x="250" y="235" width="36" height="28" rx="3" fill="#1e4976" stroke="#F59E0B" stroke-width=".8"/>
+                <rect x="40" y="305" width="340" height="12" rx="4" fill="#0d1f35"/>
+                <rect x="62" y="240" width="44" height="60" rx="6" fill="#1a3050" stroke="#F59E0B" stroke-width="1"/><rect x="68" y="248" width="32" height="20" rx="3" fill="#0a1628"/><circle cx="84" cy="278" r="4" fill="#10B981"/>
+                <text x="84" y="303" text-anchor="middle" font-size="7" fill="#F59E0B" font-family="Inter,sans-serif">INVERSOR</text>
+                <polyline points="360,210 360,290 84,290 84,305" stroke="#10B981" stroke-width="2" stroke-dasharray="5,4" fill="none" opacity=".6"/>
+                <line x1="360" y1="210" x2="360" y2="130" stroke="#64748B" stroke-width="3"/><line x1="340" y1="145" x2="380" y2="145" stroke="#64748B" stroke-width="2.5"/><circle cx="340" cy="145" r="4" fill="#F59E0B"/><circle cx="380" cy="145" r="4" fill="#F59E0B"/>
+              </svg>
+            </div>
+          </div>
+          <div class="hero-float-card card-1"><div class="hero-float-icon green">🌱</div><div class="hero-float-text"><strong>100% Renovável</strong><span>Zero emissão de CO₂</span></div></div>
+          <div class="hero-float-card card-2"><div class="hero-float-icon amber">💰</div><div class="hero-float-text"><strong>Até 95% economia</strong><span>na conta de luz</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-benefits">
+    <div class="container">
+      <div class="hero-benefits-inner">
+        <div class="hero-benefit"><div class="hero-benefit-icon">⚡</div><div class="hero-benefit-text"><strong>Economia Imediata</strong><span>Do 1º mês após ativação</span></div></div>
+        <div class="hero-benefit"><div class="hero-benefit-icon">🌱</div><div class="hero-benefit-text"><strong>Sustentabilidade</strong><span>Reduza sua pegada de carbono</span></div></div>
+        <div class="hero-benefit"><div class="hero-benefit-icon">🏠</div><div class="hero-benefit-text"><strong>Valorização</strong><span>Imóvel valoriza até 8%</span></div></div>
+        <div class="hero-benefit"><div class="hero-benefit-icon">🛡️</div><div class="hero-benefit-text"><strong>Garantia 25 anos</strong><span>Nos módulos fotovoltaicos</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIMULADOR -->
+<section id="simulador" class="section" style="background:var(--off-white)">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge">Calculadora Gratuita</div>
+      <h2 class="section-title">Simule sua economia em segundos</h2>
+      <p class="section-subtitle">Descubra quanto você pode economizar com energia solar sem compromisso.</p>
+    </div>
+    <div class="simulator-grid">
+      <div class="sim-card">
+        <div class="sim-form-title"><span>☀️</span> Seus dados</div>
+        <div class="form-group"><label for="conta-luz">Valor da conta de luz <span>(mensal)</span></label><div class="input-prefix-wrap"><span class="input-prefix">R$</span><input type="number" id="conta-luz" class="form-control" placeholder="350" min="50" max="99999" /></div></div>
+        <div class="form-group"><label for="cidade">Cidade</label><select id="cidade" class="form-control"><option value="">Selecione...</option><option value="teresina">Teresina – PI</option><option value="parnaiba">Parnaíba – PI</option><option value="picos">Picos – PI</option><option value="floriano">Floriano – PI</option><option value="saoLuis">São Luís – MA</option><option value="timon">Timon – MA</option><option value="outros">Outra cidade</option></select></div>
+        <div class="form-group"><label for="tipo-imovel">Tipo de imóvel</label><select id="tipo-imovel" class="form-control"><option value="">Selecione...</option><option value="residencial">Residencial</option><option value="comercial">Comercial</option><option value="industrial">Industrial</option><option value="rural">Rural</option></select></div>
+        <div class="form-group"><label for="tarifa">Tarifa <span>(R$/kWh — opcional)</span></label><div class="input-prefix-wrap"><span class="input-prefix">R$</span><input type="number" id="tarifa" class="form-control" placeholder="0.85" step="0.01" min="0.3" max="3" /></div></div>
+        <button class="btn btn-primary btn-simulate" onclick="simular()">🧮 Calcular Economia</button>
+      </div>
+      <div class="sim-result" id="sim-result" aria-live="polite">
+        <div class="sim-result-title">Resultado da Simulação</div>
+        <div class="sim-result-sub">Estimativa baseada em irradiação solar regional e equipamentos de alta eficiência.</div>
+        <div id="sim-placeholder" class="sim-placeholder"><span class="ph-icon">☀️</span><p>Preencha os campos ao lado para ver sua estimativa personalizada.</p></div>
+        <div id="sim-data" style="display:none">
+          <div class="result-grid">
+            <div class="result-item highlight"><div class="result-label">Potência do sistema</div><div class="result-value" id="res-kwp">–</div><div class="result-note">kWp</div></div>
+            <div class="result-item"><div class="result-label">Qtd. de painéis</div><div class="result-value" id="res-paineis">–</div><div class="result-note">módulos 550W</div></div>
+            <div class="result-item highlight"><div class="result-label">Economia mensal</div><div class="result-value" id="res-economia-mes">–</div><div class="result-note">estimativa</div></div>
+            <div class="result-item"><div class="result-label">Economia anual</div><div class="result-value" id="res-economia-ano">–</div><div class="result-note">por ano</div></div>
+            <div class="result-item"><div class="result-label">Investimento estimado</div><div class="result-value" id="res-investimento">–</div><div class="result-note">com instalação</div></div>
+            <div class="result-item"><div class="result-label">Payback estimado</div><div class="result-value" id="res-payback">–</div><div class="result-note">retorno</div></div>
+            <div class="result-item full" style="background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.3)"><div class="result-label">Economia em 25 anos</div><div class="result-value" id="res-25anos" style="color:#10B981">–</div><div class="result-note">vida útil</div></div>
+          </div>
+          <hr class="sim-divider">
+          <p class="sim-disclaimer">⚠️ Valores estimados para fins illustrativos. O dimensionamento real depende de análise técnica.</p>
+          <a href="#" id="btn-wa-sim" class="btn btn-green btn-wa-sim" target="_blank" rel="noopener">📲 Solicitar Orçamento via WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre" class="section">
+  <div class="container">
+    <div class="sobre-grid">
+      <div class="sec-img-wrap" style="position:relative">
+        <div class="sec-img-inner sobre-bg">
+          <img id="img-sobre" class="site-img" src="" alt="Sobre a SolarVida" style="display:none" />
+          <span class="emoji-fallback">☀️</span>
+        </div>
+        <div class="sobre-badge-wrap"><div class="sobre-badge-num">8+</div><div class="sobre-badge-txt">anos de experiência</div></div>
+      </div>
+      <div>
+        <div class="badge">Nossa história</div>
+        <h2 class="section-title">Pioneiros em energia solar no Piauí</h2>
+        <p class="section-subtitle" style="margin-bottom:28px">Fundada em 2016, a SolarVida nasceu com o propósito de democratizar o acesso à energia solar no Nordeste. Hoje somos referência com mais de 500 instalações entregues em todo o Piauí e Maranhão.</p>
+        <div class="sobre-items">
+          <div class="sobre-item"><div class="sobre-item-icon">📍</div><div><h4>Região de Atendimento</h4><p>Atendemos todo o Piauí e Maranhão, com equipes próprias em Teresina, Parnaíba, Picos e São Luís.</p></div></div>
+          <div class="sobre-item"><div class="sobre-item-icon">🏆</div><div><h4>Certificações & Diferenciais</h4><p>Empresa certificada pela ABSOLAR. Engenheiros especializados e instaladores credenciados pelo CREA-PI.</p></div></div>
+          <div class="sobre-item"><div class="sobre-item-icon">🔧</div><div><h4>Suporte Completo</h4><p>Da análise técnica à homologação — acompanhamos você em cada etapa do processo.</p></div></div>
+          <div class="sobre-item"><div class="sobre-item-icon">🤝</div><div><h4>Pós-venda e Garantia</h4><p>Monitoramento remoto, manutenção preventiva e garantia de até 25 anos nos módulos.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos" class="section section-dark">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge">O que fazemos</div>
+      <h2 class="section-title">Soluções completas do projeto à ativação</h2>
+      <p class="section-subtitle">Cuidamos de tudo para você aproveitar a economia sem preocupação.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-card-img"><img id="img-srv-projeto" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">📐</span></div>
+        <h3>Projeto Técnico</h3><p>Dimensionamento personalizado com base no seu consumo e nas características do telhado.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card-img"><img id="img-srv-instalacao" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">🔨</span></div>
+        <h3>Instalação</h3><p>Equipe técnica especializada instala seus painéis, inversor e cabeamento com segurança.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card-img"><img id="img-srv-manutencao" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">🔧</span></div>
+        <h3>Manutenção</h3><p>Inspeção preventiva periódica para garantir máxima eficiência e prolongar a vida útil.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card-img"><img id="img-srv-limpeza" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">🧹</span></div>
+        <h3>Limpeza dos Módulos</h3><p>Painéis limpos geram até 30% a mais de energia. Limpeza técnica sem risco de danos.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card-img"><img id="img-srv-monitoramento" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">📊</span></div>
+        <h3>Monitoramento</h3><p>Acompanhe a geração em tempo real pelo aplicativo. Identificamos falhas antes de você notar.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card-img"><img id="img-srv-homologacao" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">📋</span></div>
+        <h3>Homologação ANEEL</h3><p>Cuidamos de toda a burocracia com a distribuidora local para conexão à rede elétrica.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUÇÕES -->
+<section id="solucoes" class="section section-gray">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge">Segmentos</div>
+      <h2 class="section-title">Para cada necessidade, uma solução solar</h2>
+      <p class="section-subtitle">Projetos dimensionados para residências, empresas e produções rurais.</p>
+    </div>
+    <div class="solucoes-grid">
+      <article class="solucao-card">
+        <div class="solucao-img residencial"><img id="img-sol-residencial" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">🏠</span></div>
+        <div class="solucao-body"><h3>Residencial</h3><p>Reduza até 95% da sua conta de luz. Projetos a partir de 2 kWp para casas e apartamentos.</p><div class="solucao-tags"><span class="solucao-tag">Casa</span><span class="solucao-tag">Apartamento</span><span class="solucao-tag">Condomínio</span></div></div>
+      </article>
+      <article class="solucao-card">
+        <div class="solucao-img comercial"><img id="img-sol-comercial" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">🏢</span></div>
+        <div class="solucao-body"><h3>Comercial</h3><p>Reduza custos operacionais e melhore a margem do seu negócio com energia limpa e estável.</p><div class="solucao-tags"><span class="solucao-tag">Comércio</span><span class="solucao-tag">Indústria</span><span class="solucao-tag">Hospital</span></div></div>
+      </article>
+      <article class="solucao-card">
+        <div class="solucao-img rural"><img id="img-sol-rural" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">🌾</span></div>
+        <div class="solucao-body"><h3>Rural</h3><p>Bombeamento solar, irrigação e eletrificação rural. Energia onde a rede elétrica não chega.</p><div class="solucao-tags"><span class="solucao-tag">Fazenda</span><span class="solucao-tag">Irrigação</span><span class="solucao-tag">Off-grid</span></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona" class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge">Entenda o processo</div>
+      <h2 class="section-title">Como funciona a energia solar</h2>
+      <p class="section-subtitle">Do sol à sua tomada — em 5 etapas simples.</p>
+    </div>
+    <div class="como-flow">
+      <div class="flow-step"><div class="flow-icon">☀️</div><span class="flow-label">Sol</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="flow-icon">🔲</div><span class="flow-label">Painéis</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="flow-icon">⚡</div><span class="flow-label">Inversor</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="flow-icon">🏠</div><span class="flow-label">Imóvel</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="flow-icon">🔌</div><span class="flow-label">Rede</span></div>
+    </div>
+    <h3 style="text-align:center;font-family:var(--font-display);font-size:1.3rem;font-weight:800;margin-bottom:36px">Etapas do projeto</h3>
+    <div class="etapas-grid">
+      <div class="etapa-card"><div class="etapa-num">1</div><div class="etapa-icon">🔍</div><h4>Análise</h4><p>Visita técnica e análise das contas de energia e do telhado.</p></div>
+      <div class="etapa-card"><div class="etapa-num">2</div><div class="etapa-icon">📐</div><h4>Projeto</h4><p>Dimensionamento e proposta técnica personalizada.</p></div>
+      <div class="etapa-card"><div class="etapa-num">3</div><div class="etapa-icon">📋</div><h4>Homologação</h4><p>Solicitação de conexão à distribuidora local.</p></div>
+      <div class="etapa-card"><div class="etapa-num">4</div><div class="etapa-icon">🔧</div><h4>Instalação</h4><p>Instalação dos módulos, inversor e cabeamento em 1–3 dias.</p></div>
+      <div class="etapa-card"><div class="etapa-num">5</div><div class="etapa-icon">✅</div><h4>Ativação</h4><p>Sistema energizado. Começa a gerar e economizar imediatamente.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="section section-gray">
+  <div class="container">
+    <div class="section-header" style="text-align:center">
+      <div class="badge">FAQ</div>
+      <h2 class="section-title">Perguntas frequentes</h2>
+      <p class="section-subtitle" style="margin:0 auto">Respondemos as dúvidas mais comuns sobre energia solar.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">Quanto custa um sistema de energia solar? <span class="faq-chevron">▼</span></button><div class="faq-answer">Um sistema residencial básico (4–6 kWp) custa entre R$ 18.000 e R$ 32.000 instalado. O valor varia conforme o consumo, tipo de telhado e equipamentos. Oferecemos financiamento em até 60 meses.</div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">Em quanto tempo recupero o investimento? <span class="faq-chevron">▼</span></button><div class="faq-answer">O payback médio no Piauí é de 3 a 5 anos. Com garantia de 25 anos nos módulos, você tem de 20 a 22 anos de geração praticamente gratuita após o retorno.</div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">O sistema funciona em dias nublados? <span class="faq-chevron">▼</span></button><div class="faq-answer">Sim! Com eficiência reduzida (30–50%). O Piauí tem uma das maiores incidências solares do Brasil, garantindo excelente produção o ano todo.</div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">Preciso de bateria para ter energia solar? <span class="faq-chevron">▼</span></button><div class="faq-answer">Na maioria dos casos, não. Sistemas grid-tie injetam o excedente na rede e acumulam créditos de energia usados à noite. Baterias são para sistemas off-grid.</div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">Qual a manutenção necessária? <span class="faq-chevron">▼</span></button><div class="faq-answer">Simples e barata. Recomendamos limpeza dos módulos a cada 6 meses e vistoria técnica anual. Oferecemos planos de manutenção com monitoramento remoto.</div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">Quanto tempo leva a instalação? <span class="faq-chevron">▼</span></button><div class="faq-answer">A instalação física leva 1 a 3 dias. O processo completo (análise + projeto + homologação + instalação + ativação) leva em média 45 a 90 dias.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="section section-dark">
+  <div class="container">
+    <div class="section-header" style="text-align:center">
+      <div class="badge">Fale conosco</div>
+      <h2 class="section-title" style="color:var(--white)">Entre em contato</h2>
+      <p class="section-subtitle" style="margin:0 auto">Resposta em até 2 horas no horário comercial. Visita técnica sem custo.</p>
+    </div>
+    <div class="contato-grid">
+      <div>
+        <div class="contato-items">
+          <div class="contato-item"><div class="contato-item-icon">📲</div><a href="#" id="wa-contato-link">Chamar no WhatsApp</a></div>
+          <div class="contato-item"><div class="contato-item-icon">📞</div><a href="#" id="tel-contato-link">(86) 99999-0000</a></div>
+          <div class="contato-item"><div class="contato-item-icon">✉️</div><a href="#" id="email-contato-link">contato@solarvida.com.br</a></div>
+          <div class="contato-item"><div class="contato-item-icon">📍</div><span id="endereco-display">Av. Frei Serafim, 2510 – Centro<br>Teresina – PI</span></div>
+          <div class="contato-item"><div class="contato-item-icon">🕐</div><span id="horario-display">Seg–Sex: 8h–18h | Sáb: 8h–12h</span></div>
+        </div>
+      </div>
+      <div class="contato-form-card">
+        <h3>Envie uma mensagem</h3>
+        <div class="form-row">
+          <div class="form-group"><label for="nome">Nome</label><input type="text" id="nome" class="form-control" placeholder="João Silva" /></div>
+          <div class="form-group"><label for="fone">WhatsApp</label><input type="tel" id="fone" class="form-control" placeholder="(86) 99000-0000" /></div>
+        </div>
+        <div class="form-group mt14"><label for="email-form">E-mail</label><input type="email" id="email-form" class="form-control" placeholder="joao@email.com" /></div>
+        <div class="form-group mt14"><label for="tipo-projeto">Tipo de projeto</label><select id="tipo-projeto" class="form-control"><option value="">Selecione...</option><option>Residencial</option><option>Comercial</option><option>Rural</option><option>Industrial</option></select></div>
+        <div class="form-group mt14"><label for="mensagem">Mensagem <span style="color:var(--gray);font-weight:400">(opcional)</span></label><textarea id="mensagem" class="form-control" placeholder="Descreva seu projeto..."></textarea></div>
+        <div class="mt18"><button class="btn btn-primary" onclick="enviarFormWA()" style="width:100%;justify-content:center;padding:16px">📲 Enviar via WhatsApp</button><p style="text-align:center;font-size:.78rem;color:var(--gray);margin-top:10px">Seus dados são usados apenas para retorno de contato.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><div class="footer-logo-icon">☀️</div>SolarVida Energia</div>
+        <p class="footer-desc">Pioneiros em energia solar fotovoltaica no Piauí. Economize, sustente e valorize seu imóvel.</p>
+        <div class="footer-social">
+          <a href="#" id="footer-instagram" target="_blank" rel="noopener">📸</a>
+          <a href="#" id="footer-facebook" target="_blank" rel="noopener">👤</a>
+          <a href="#" id="footer-youtube" target="_blank" rel="noopener">▶️</a>
+          <a href="#" id="footer-whatsapp" target="_blank" rel="noopener">📲</a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Serviços</h4><ul><li><a href="#servicos">Projeto Técnico</a></li><li><a href="#servicos">Instalação</a></li><li><a href="#servicos">Manutenção</a></li><li><a href="#servicos">Limpeza</a></li><li><a href="#servicos">Monitoramento</a></li><li><a href="#servicos">Homologação</a></li></ul></div>
+      <div class="footer-col"><h4>Soluções</h4><ul><li><a href="#solucoes">Residencial</a></li><li><a href="#solucoes">Comercial</a></li><li><a href="#solucoes">Rural</a></li><li><a href="#simulador">Simulador</a></li></ul></div>
+      <div class="footer-col"><h4>Contato</h4><ul><li><a href="#" id="footer-tel">(86) 99999-0000</a></li><li><a href="#" id="footer-email">contato@solarvida.com.br</a></li><li><a href="#contato">Solicitar Orçamento</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 SolarVida Energia. Todos os direitos reservados.</span>
+      <!-- CADEADO ADMIN — discreto -->
+      <a href="admin.html" class="admin-lock" title="Área administrativa">🔒</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WA FLUTUANTE -->
+<div class="wa-float">
+  <div class="wa-bubble">Posso te ajudar com seu projeto solar? 😊</div>
+  <div style="position:relative">
+    <div class="wa-pulse"></div>
+    <a href="#" id="wa-float-btn" class="wa-btn" target="_blank" rel="noopener">📲</a>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded',()=>{
+    const waMsg='Olá! Gostaria de um orçamento de energia solar.';
+    const waUrl=waLink(waMsg);
+    document.getElementById('wa-float-btn').href=waUrl;
+    document.getElementById('wa-contato-link').href=waUrl;
+    document.getElementById('footer-whatsapp').href=waUrl;
+    document.getElementById('footer-instagram').href=EMPRESA.instagram;
+    document.getElementById('footer-facebook').href=EMPRESA.facebook;
+    document.getElementById('footer-youtube').href=EMPRESA.youtube;
+    const telH='tel:+'+EMPRESA.whatsapp;
+    document.getElementById('tel-contato-link').href=telH;
+    document.getElementById('tel-contato-link').textContent=EMPRESA.telefone;
+    document.getElementById('footer-tel').href=telH;
+    document.getElementById('footer-tel').textContent=EMPRESA.telefone;
+    const mailH='mailto:'+EMPRESA.email;
+    document.getElementById('email-contato-link').href=mailH;
+    document.getElementById('email-contato-link').textContent=EMPRESA.email;
+    document.getElementById('footer-email').href=mailH;
+    document.getElementById('footer-email').textContent=EMPRESA.email;
+    document.getElementById('btn-orcamento-hero').href=waUrl;
+    document.getElementById('hero-btn-orcamento').href=waUrl;
+    document.getElementById('stat-projetos').textContent=EMPRESA.projetosRealizados;
+    document.getElementById('stat-kwp').textContent=EMPRESA.kwpInstalados;
+    document.getElementById('stat-anos').textContent=EMPRESA.anosExperiencia+' anos';
+    loadSiteImages();
+    /* Esconde SVG do hero se imagem foi carregada */
+    const heroImg=document.getElementById('img-hero');
+    if(heroImg&&heroImg.src&&heroImg.src!==window.location.href){
+      const svg=document.getElementById('svg-hero');
+      if(svg)svg.style.display='none';
+    }
+  });
+  window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60)},{passive:true});
+  const hamburger=document.getElementById('hamburger');
+  const mobileMenu=document.getElementById('mobile-menu');
+  hamburger.addEventListener('click',()=>{const o=mobileMenu.classList.toggle('open');hamburger.setAttribute('aria-expanded',o);document.getElementById('hicon').textContent=o?'✕':'☰'});
+  function closeMobile(){mobileMenu.classList.remove('open');hamburger.setAttribute('aria-expanded',false);document.getElementById('hicon').textContent='☰'}
+  function toggleFaq(btn){const item=btn.closest('.faq-item');const o=item.classList.toggle('open');btn.setAttribute('aria-expanded',o)}
+  const IRRAD={teresina:5.8,parnaiba:5.6,picos:5.7,floriano:5.5,saoLuis:5.2,timon:5.3,outros:5.4};
+  const CUSTO_KWP={residencial:4800,comercial:4400,industrial:4200,rural:5200};
+  function fmt(n){return'R$ '+Math.round(n).toLocaleString('pt-BR')}
+  function simular(){
+    const conta=parseFloat(document.getElementById('conta-luz').value);
+    const cidadeKey=document.getElementById('cidade').value;
+    const tipo=document.getElementById('tipo-imovel').value;
+    const tarifaIn=parseFloat(document.getElementById('tarifa').value);
+    if(!conta||conta<50){alert('Informe o valor da conta (mínimo R$ 50).');return}
+    if(!cidadeKey){alert('Selecione a cidade.');return}
+    if(!tipo){alert('Selecione o tipo de imóvel.');return}
+    const tarifa=tarifaIn>0?tarifaIn:0.85;
+    const consumo=conta/tarifa;
+    const irrad=IRRAD[cidadeKey]||5.4;
+    const kwp=consumo/(irrad*30*0.78);
+    const paineis=Math.ceil(kwp/0.55);
+    const kwpReal=paineis*0.55;
+    const geracao=kwpReal*irrad*30*0.78;
+    const eco=Math.min(geracao,consumo)*tarifa*0.95;
+    const ecoAno=eco*12;
+    const inv=kwpReal*(CUSTO_KWP[tipo]||4800);
+    const pb=inv/eco;
+    document.getElementById('res-kwp').textContent=kwpReal.toFixed(1);
+    document.getElementById('res-paineis').textContent=paineis;
+    document.getElementById('res-economia-mes').textContent=fmt(eco);
+    document.getElementById('res-economia-ano').textContent=fmt(ecoAno);
+    document.getElementById('res-investimento').textContent=fmt(inv);
+    document.getElementById('res-payback').textContent=pb<12?`${Math.round(pb)} meses`:`${(pb/12).toFixed(1)} anos`;
+    document.getElementById('res-25anos').textContent=fmt(ecoAno*25);
+    const ct=document.getElementById('cidade').options[document.getElementById('cidade').selectedIndex].text;
+    const msg=`Olá! Fiz a simulação no site.\n\n📊 *Dados:*\n• Conta: R$ ${conta}\n• Cidade: ${ct}\n• Tipo: ${tipo}\n• Potência: ${kwpReal.toFixed(1)} kWp (${paineis} painéis)\n• Economia: ${fmt(eco)}/mês\n\nPode me enviar uma proposta?`;
+    document.getElementById('btn-wa-sim').href=waLink(msg);
+    document.getElementById('sim-placeholder').style.display='none';
+    document.getElementById('sim-data').style.display='block';
+    document.getElementById('sim-result').scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  function enviarFormWA(){
+    const nome=document.getElementById('nome').value.trim();
+    const fone=document.getElementById('fone').value.trim();
+    const email=document.getElementById('email-form').value.trim();
+    const tipo=document.getElementById('tipo-projeto').value;
+    const msg=document.getElementById('mensagem').value.trim();
+    if(!nome){alert('Informe seu nome.');return}
+    if(!fone){alert('Informe seu telefone.');return}
+    const txt=`Olá! Vim pelo site.\n\n👤 *Nome:* ${nome}\n📱 *Tel:* ${fone}${email?`\n📧 *Email:* ${email}`:''}${tipo?`\n🏠 *Tipo:* ${tipo}`:''}${msg?`\n💬 ${msg}`:''}`;
+    window.open(waLink(txt),'_blank','noopener');
+  }
+</script>
+</body>
+</html>

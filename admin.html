@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — SolarVida</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--navy:#0A1628;--navy-2:#112240;--amber:#F59E0B;--amber-d:#D97706;--green:#10B981;--red:#EF4444;--gray:#64748B;--gray-l:#CBD5E1;--white:#fff;--off:#F8FAFC;--font-d:'Syne',sans-serif;--font-b:'Inter',sans-serif;--r:12px;--sh:0 4px 24px rgba(0,0,0,.18)}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font-b);background:var(--navy);color:var(--white);min-height:100vh}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* LOGIN */
+    #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+    .login-card{background:var(--navy-2);border-radius:20px;padding:40px 36px;width:100%;max-width:380px;box-shadow:var(--sh);border:1px solid rgba(255,255,255,.08)}
+    .login-logo{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:32px;font-family:var(--font-d);font-size:1.4rem;font-weight:800}
+    .login-logo-icon{width:44px;height:44px;background:var(--amber);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+    .login-title{font-family:var(--font-d);font-size:1.3rem;font-weight:800;margin-bottom:6px;text-align:center}
+    .login-sub{font-size:.85rem;color:rgba(255,255,255,.5);text-align:center;margin-bottom:28px}
+    .field{margin-bottom:16px}
+    .field label{display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:rgba(255,255,255,.7)}
+    .field input{width:100%;padding:12px 14px;border:2px solid rgba(255,255,255,.1);border-radius:var(--r);background:rgba(255,255,255,.06);color:var(--white);font-size:.95rem;transition:.2s}
+    .field input:focus{outline:none;border-color:var(--amber);background:rgba(255,255,255,.1)}
+    .btn-login{width:100%;padding:14px;background:var(--amber);color:var(--navy);border:none;border-radius:var(--r);font-weight:700;font-size:1rem;cursor:pointer;transition:.2s;margin-top:4px}
+    .btn-login:hover{background:var(--amber-d);transform:translateY(-1px)}
+    .login-err{color:#fca5a5;font-size:.82rem;text-align:center;margin-top:12px;display:none}
+
+    /* ADMIN PANEL */
+    #admin-panel{display:none}
+    .topbar{background:var(--navy-2);border-bottom:1px solid rgba(255,255,255,.08);padding:0 20px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .topbar-logo{display:flex;align-items:center;gap:10px;font-family:var(--font-d);font-size:1.1rem;font-weight:800}
+    .topbar-logo-icon{width:32px;height:32px;background:var(--amber);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+    .topbar-right{display:flex;align-items:center;gap:12px}
+    .btn-sm{padding:8px 16px;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;border:none;transition:.2s;display:inline-flex;align-items:center;gap:6px}
+    .btn-sm.outline{background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2)}
+    .btn-sm.outline:hover{border-color:var(--amber);color:var(--amber)}
+    .btn-sm.danger{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.3)}
+    .btn-sm.danger:hover{background:rgba(239,68,68,.25)}
+
+    .admin-body{max-width:900px;margin:0 auto;padding:32px 20px 60px}
+    .admin-header{margin-bottom:32px}
+    .admin-header h1{font-family:var(--font-d);font-size:1.6rem;font-weight:800;margin-bottom:4px}
+    .admin-header p{font-size:.88rem;color:rgba(255,255,255,.5)}
+
+    /* TABS */
+    .tabs{display:flex;gap:4px;margin-bottom:28px;background:rgba(255,255,255,.05);padding:4px;border-radius:12px;flex-wrap:wrap}
+    .tab{flex:1;min-width:90px;padding:10px 8px;border:none;background:transparent;color:rgba(255,255,255,.5);font-size:.8rem;font-weight:600;cursor:pointer;border-radius:9px;transition:.2s;white-space:nowrap;text-align:center}
+    .tab.active{background:var(--amber);color:var(--navy)}
+    .tab:hover:not(.active){background:rgba(255,255,255,.08);color:var(--white)}
+    .tab-content{display:none}
+    .tab-content.active{display:block}
+
+    /* UPLOAD CARDS */
+    .upload-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+    .upload-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;transition:.2s}
+    .upload-card:hover{border-color:rgba(245,158,11,.4)}
+    .card-preview{height:160px;background:rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;cursor:pointer}
+    .card-preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .card-preview .preview-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.3);font-size:.78rem;z-index:1}
+    .card-preview .preview-placeholder span{font-size:2rem}
+    .card-preview .preview-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:.2s;z-index:2}
+    .card-preview:hover .preview-overlay{opacity:1}
+    .preview-overlay-txt{color:var(--white);font-size:.8rem;font-weight:600;text-align:center}
+    .card-body{padding:16px}
+    .card-label{font-weight:700;font-size:.9rem;margin-bottom:4px}
+    .card-desc{font-size:.78rem;color:rgba(255,255,255,.4);margin-bottom:12px}
+    .card-actions{display:flex;gap:8px}
+    .btn-upload{flex:1;padding:9px;background:var(--amber);color:var(--navy);border:none;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;transition:.2s;text-align:center}
+    .btn-upload:hover{background:var(--amber-d)}
+    .btn-remove{padding:9px 12px;background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.3);border-radius:8px;font-size:.8rem;cursor:pointer;transition:.2s}
+    .btn-remove:hover{background:rgba(239,68,68,.25)}
+    .has-img .card-label::after{content:' ✓';color:var(--green)}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy-2);border:1px solid rgba(255,255,255,.12);color:var(--white);padding:12px 20px;border-radius:12px;font-size:.88rem;font-weight:600;box-shadow:var(--sh);transition:.35s;z-index:9999;pointer-events:none;white-space:nowrap}
+    .toast.show{transform:translateX(-50%) translateY(0)}
+    .toast.success{border-color:rgba(16,185,129,.5);color:#6ee7b7}
+    .toast.error{border-color:rgba(239,68,68,.5);color:#fca5a5}
+
+    /* RESPONSIVE */
+    @media(max-width:600px){
+      .upload-grid{grid-template-columns:1fr}
+      .topbar{padding:0 14px}
+      .admin-body{padding:20px 14px 60px}
+      .tabs{gap:3px}
+      .tab{font-size:.72rem;padding:8px 4px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-icon">☀️</div>
+      SolarVida
+    </div>
+    <div class="login-title">Painel Administrativo</div>
+    <div class="login-sub">Acesso restrito — informe suas credenciais</div>
+    <div class="field">
+      <label>E-mail</label>
+      <input type="email" id="login-user" placeholder="seu@email.com" autocomplete="username"/>
+    </div>
+    <div class="field">
+      <label>Senha</label>
+      <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+    <button class="btn-login" onclick="doLogin()">🔓 Entrar</button>
+    <div class="login-err" id="login-err">Usuário ou senha incorretos.</div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+  <div class="topbar">
+    <div class="topbar-logo">
+      <div class="topbar-logo-icon">☀️</div>
+      Admin · SolarVida
+    </div>
+    <div class="topbar-right">
+      <a href="index.html" class="btn-sm outline" target="_blank">👁️ Ver site</a>
+      <button class="btn-sm danger" onclick="doLogout()">🚪 Sair</button>
+    </div>
+  </div>
+
+  <div class="admin-body">
+    <div class="admin-header">
+      <h1>Gerenciar Imagens</h1>
+      <p>Faça upload das fotos que aparecerão em cada seção do site. As imagens ficam salvas no dispositivo.</p>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('tab-hero',this)">🏠 Hero</button>
+      <button class="tab" onclick="showTab('tab-sobre',this)">🏢 Sobre</button>
+      <button class="tab" onclick="showTab('tab-servicos',this)">🔧 Serviços</button>
+      <button class="tab" onclick="showTab('tab-solucoes',this)">☀️ Soluções</button>
+      <button class="tab" onclick="showTab('tab-config',this)">⚙️ Config</button>
+    </div>
+
+    <!-- TAB HERO -->
+    <div id="tab-hero" class="tab-content active">
+      <div class="upload-grid">
+        <div class="upload-card" id="card-hero">
+          <div class="card-preview" onclick="triggerUpload('hero')">
+            <img id="prev-hero" src="" alt="" style="display:none"/>
+            <div class="preview-placeholder"><span>🏠</span>Clique para trocar</div>
+            <div class="preview-overlay"><div class="preview-overlay-txt">📷 Trocar imagem</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-label">Imagem Principal (Hero)</div>
+            <div class="card-desc">Foto que aparece no topo do site, ao lado do título.</div>
+            <div class="card-actions">
+              <button class="btn-upload" onclick="triggerUpload('hero')">📷 Enviar foto</button>
+              <button class="btn-remove" onclick="removeImg('hero')">🗑️</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB SOBRE -->
+    <div id="tab-sobre" class="tab-content">
+      <div class="upload-grid">
+        <div class="upload-card" id="card-sobre">
+          <div class="card-preview" onclick="triggerUpload('sobre')">
+            <img id="prev-sobre" src="" alt="" style="display:none"/>
+            <div class="preview-placeholder"><span>🏢</span>Clique para trocar</div>
+            <div class="preview-overlay"><div class="preview-overlay-txt">📷 Trocar imagem</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-label">Foto da Empresa (Sobre)</div>
+            <div class="card-desc">Foto que aparece na seção "Nossa história".</div>
+            <div class="card-actions">
+              <button class="btn-upload" onclick="triggerUpload('sobre')">📷 Enviar foto</button>
+              <button class="btn-remove" onclick="removeImg('sobre')">🗑️</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB SERVIÇOS -->
+    <div id="tab-servicos" class="tab-content">
+      <div class="upload-grid">
+        <div class="upload-card" id="card-srv-projeto">
+          <div class="card-preview" onclick="triggerUpload('srv-projeto')">
+            <img id="prev-srv-projeto" src="" alt="" style="display:none"/>
+            <div class="preview-placeholder"><span>📐</span>Projeto Técnico</div>
+            <div class="preview-overlay"><div class="preview-overlay-txt">📷 Trocar</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-label">Projeto Técnico</div>
+            <div class="card-desc">Foto para o card de Projeto Técnico.</div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-projeto')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-projeto')">🗑️</button></div>
+          </div>
+        </div>
+        <div class="upload-card" id="card-srv-instalacao">
+          <div class="card-preview" onclick="triggerUpload('srv-instalacao')">
+            <img id="prev-srv-instalacao" src="" alt="" style="display:none"/>
+            <div class="preview-placeholder"><span>🔨</span>Instalação</div>
+            <div class="preview-overlay"><div class="preview-overlay-txt">📷 Trocar</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-label">Instalação</div>
+            <div class="card-desc">Foto de instalação de painéis.</div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-instalacao')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-instalacao')">🗑️</button></div>
+          </div>
+        </div>
+        <div class="upload-card" id="card-srv-manutencao">
+          <div class="card-preview" onclick="triggerUpload('srv-manutencao')">
+            <img id="prev-srv-manutencao" src="" alt="" style="display:none"/>
+            <div class="preview-placeholder"><span>🔧</span>Manutenção</div>
+            <div class="preview-overlay"><div class="preview-overlay-txt">📷 Trocar</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-label">Manutenção</div>
+            <div class="card-desc">Foto de manutenção do sistema solar.</div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-manutencao')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-manutencao')">🗑️</button></div>
+          </div>
+        </div>
+        <div class="upload-card" id="card-srv-limpeza">
+          <div class="card-preview" onclick="triggerUpload('srv-limpeza')">
+            <img id="prev-srv-limpeza" src="" alt="" style="display:none"/>
+            <div class="preview-placeholder"><span>🧹</span>Limpeza</div>
+            <div class="preview-overlay"><div class="preview-overlay-txt">📷 Trocar</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-label">Limpeza dos Módulos</div>
+            <div class="card-desc">Foto de limpeza dos painéis solares.</div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-limpeza')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-limpeza')">🗑️</button></div>
+          </div>
+        </div>
+        <div class="upload-card" id="card-srv-monitoramento">
+          <div class="card-preview" onclick="triggerUpload('srv-monitoramento')">
+            <img id="prev-srv-monitoramento" src="" alt="" style="display:none"/>
+            <div class="preview-placeholder"><span>📊</span>Monitoramento</div>
+            <div class="preview-overlay"><div class="preview-overlay-txt">📷 Trocar</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-label">Monitoramento</div>
+            <div class="card-desc">Foto para o card de monitoramento.</div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-monitoramento')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-monitoramento')">🗑️</button></div>
+          </div>
+        </div>
+        <div class="upload-card" id="card-srv-homologacao">
+          <div class="card-preview" onclick="triggerUpload('srv-homologacao')">
+            <img id="prev-srv-homologacao" src="" alt="" style="display:none"/>
+            <div class="preview-placeholder"><span>📋</span>Homologação</div>
+            <div class="preview-overlay"><div class="preview-overlay-txt">📷 Trocar</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-label">Homologação ANEEL</div>
+            <div class="card-desc">Foto para o card de homologação.</div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-homologacao')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-homologacao')">🗑️</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB SOLUÇÕES -->
+    <div id="tab-solucoes" class="tab-content">
+      <div class="upload-grid">
+        <div class="upload-card" id="card-sol-residencial">
+          <div class="card-preview" onclick="triggerUpload('sol-residencial')">
+            <img id="prev-sol-residencial" src="" alt="" style="display:none"/>
+            <div class="preview-placeholder"><span>🏠</span>Residencial</div>
+            <div class="preview-overlay"><div class="preview-overlay-txt">📷 Trocar</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-label">Solução Residencial</div>
+            <div class="card-desc">Foto do card de solução residencial.</div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('sol-residencial')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('sol-residencial')">🗑️</button></div>
+          </div>
+        </div>
+        <div class="upload-card" id="card-sol-comercial">
+          <div class="card-preview" onclick="triggerUpload('sol-comercial')">
+            <img id="prev-sol-comercial" src="" alt="" style="display:none"/>
+            <div class="preview-placeholder"><span>🏢</span>Comercial</div>
+            <div class="preview-overlay"><div class="preview-overlay-txt">📷 Trocar</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-label">Solução Comercial</div>
+            <div class="card-desc">Foto do card de solução comercial.</div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('sol-comercial')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('sol-comercial')">🗑️</button></div>
+          </div>
+        </div>
+        <div class="upload-card" id="card-sol-rural">
+          <div class="card-preview" onclick="triggerUpload('sol-rural')">
+            <img id="prev-sol-rural" src="" alt="" style="display:none"/>
+            <div class="preview-placeholder"><span>🌾</span>Rural</div>
+            <div class="preview-overlay"><div class="preview-overlay-txt">📷 Trocar</div></div>
+          </div>
+          <div class="card-body">
+            <div class="card-label">Solução Rural</div>
+            <div class="card-desc">Foto do card de solução rural.</div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('sol-rural')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('sol-rural')">🗑️</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB CONFIG -->
+    <div id="tab-config" class="tab-content">
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;max-width:400px">
+        <h3 style="font-family:var(--font-d);font-weight:800;margin-bottom:4px">🗑️ Limpar todas as imagens</h3>
+        <p style="font-size:.82rem;color:rgba(255,255,255,.45);margin-bottom:16px">Remove todas as fotos salvas. O site voltará a mostrar os ícones padrão.</p>
+        <button class="btn-remove" style="padding:12px 20px;font-size:.88rem;width:100%" onclick="clearAllImages()">🗑️ Limpar tudo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INPUT FILE escondido -->
+<input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFile(event)"/>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  /* ── Credenciais (salvas em localStorage) ── */
+  const DEFAULT_USER = 'joaogabrielsantoshilario05@gmail.com';
+  const DEFAULT_PASS = '09042010';
+  let currentKey = null; // chave de imagem sendo editada
+
+  function getUser(){ return localStorage.getItem('sv_admin_user') || DEFAULT_USER }
+  function getPass(){ return localStorage.getItem('sv_admin_pass') || DEFAULT_PASS }
+
+  /* ── Login / Logout ── */
+  function doLogin(){
+    const u = document.getElementById('login-user').value.trim();
+    const p = document.getElementById('login-pass').value;
+    if(u === getUser() && p === getPass()){
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-panel').style.display  = 'block';
+      loadPreviews();
+    } else {
+      document.getElementById('login-err').style.display = 'block';
+      setTimeout(()=>{ document.getElementById('login-err').style.display='none' }, 3000);
+    }
+  }
+  function doLogout(){
+    document.getElementById('admin-panel').style.display  = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('login-pass').value = '';
+  }
+
+  /* ── Tabs ── */
+  function showTab(id, btn){
+    document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  /* ── Upload ── */
+  function triggerUpload(key){
+    currentKey = key;
+    document.getElementById('file-input').value = '';
+    document.getElementById('file-input').click();
+  }
+
+  function handleFile(e){
+    const file = e.target.files[0];
+    if(!file) return;
+    if(file.size > 3 * 1024 * 1024){ showToast('Imagem muito grande (máx. 3 MB)','error'); return; }
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      const data = ev.target.result;
+      localStorage.setItem('sv_img_' + currentKey, data);
+      setPreview(currentKey, data);
+      showToast('✅ Imagem salva! Recarregue o site para ver.','success');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function setPreview(key, src){
+    const prev = document.getElementById('prev-' + key);
+    const card = document.getElementById('card-' + key);
+    const ph   = card ? card.querySelector('.preview-placeholder') : null;
+    if(prev){ prev.src = src; prev.style.display = 'block'; }
+    if(ph)  { ph.style.display = 'none'; }
+    if(card){ card.querySelector('.card-label').classList.add('has-img-label'); }
+    const lbl = card ? card.querySelector('.card-label') : null;
+    if(lbl && !lbl.textContent.includes('✓')) lbl.textContent += ' ✓';
+  }
+
+  function removeImg(key){
+    if(!confirm('Remover esta imagem?')) return;
+    localStorage.removeItem('sv_img_' + key);
+    const prev = document.getElementById('prev-' + key);
+    const card = document.getElementById('card-' + key);
+    const ph   = card ? card.querySelector('.preview-placeholder') : null;
+    if(prev){ prev.src=''; prev.style.display='none'; }
+    if(ph)  { ph.style.display='flex'; }
+    const lbl = card ? card.querySelector('.card-label') : null;
+    if(lbl)  { lbl.textContent = lbl.textContent.replace(' ✓',''); }
+    showToast('🗑️ Imagem removida','success');
+  }
+
+  function clearAllImages(){
+    if(!confirm('Remover TODAS as imagens? Esta ação não pode ser desfeita.')) return;
+    const keys=['hero','sobre','srv-projeto','srv-instalacao','srv-manutencao','srv-limpeza','srv-monitoramento','srv-homologacao','sol-residencial','sol-comercial','sol-rural'];
+    keys.forEach(k=>{ localStorage.removeItem('sv_img_'+k); removeImg(k); });
+    showToast('🗑️ Todas as imagens removidas','success');
+  }
+
+  function loadPreviews(){
+    const keys=['hero','sobre','srv-projeto','srv-instalacao','srv-manutencao','srv-limpeza','srv-monitoramento','srv-homologacao','sol-residencial','sol-comercial','sol-rural'];
+    keys.forEach(k=>{
+      const data = localStorage.getItem('sv_img_'+k);
+      if(data) setPreview(k, data);
+    });
+  }
+
+  /* ── Toast ── */
+  function showToast(msg, type='success'){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast ' + type;
+    requestAnimationFrame(()=>{ t.classList.add('show'); });
+    setTimeout(()=>{ t.classList.remove('show'); }, 3000);
+  }
+
+  /* Enter no login */
+  document.getElementById('login-user').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('login-pass').focus(); });
+</script>
+</body>
+</html>
