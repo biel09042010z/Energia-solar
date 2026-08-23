@@ -283,8 +283,8 @@
   const EMPRESA={nome:"SolarVida Energia",whatsapp:"5586999990000",email:"contato@solarvida.com.br",telefone:"(86) 99999-0000",endereco:"Av. Frei Serafim, 2510 – Centro, Teresina – PI",horario:"Seg–Sex: 8h–18h | Sáb: 8h–12h",instagram:"https://instagram.com/solarvidaenergia",facebook:"https://facebook.com/solarvidaenergia",youtube:"https://youtube.com/@solarvidaenergia",projetosRealizados:"500+",kwpInstalados:"4.200+",anosExperiencia:"8"};
   function waLink(m){return`https://wa.me/${EMPRESA.whatsapp}?text=${encodeURIComponent(m)}`}
 
-  /* ── Carrega imagens salvas pelo admin ── */
-  function loadSiteImages(){
+  /* ── Carrega imagens salvas pelo admin (agora vindas do banco de dados) ── */
+  async function loadSiteImages(){
     const imgs={
       'hero':'img-hero','sobre':'img-sobre',
       'srv-projeto':'img-srv-projeto','srv-instalacao':'img-srv-instalacao',
@@ -292,11 +292,18 @@
       'srv-monitoramento':'img-srv-monitoramento','srv-homologacao':'img-srv-homologacao',
       'sol-residencial':'img-sol-residencial','sol-comercial':'img-sol-comercial','sol-rural':'img-sol-rural'
     };
-    Object.entries(imgs).forEach(([key,id])=>{
-      const data=localStorage.getItem('sv_img_'+key);
-      const el=document.getElementById(id);
-      if(data&&el){el.src=data;el.style.display='block'}
-    });
+    try{
+      const resp=await fetch('/api/images');
+      const result=await resp.json();
+      if(!result.ok) return;
+      Object.entries(imgs).forEach(([key,id])=>{
+        const data=result.images[key];
+        const el=document.getElementById(id);
+        if(data&&el){el.src=data;el.style.display='block'}
+      });
+    }catch(err){
+      console.error('Erro ao carregar imagens do site:',err);
+    }
   }
 </script>
 
@@ -671,13 +678,14 @@
     document.getElementById('stat-projetos').textContent=EMPRESA.projetosRealizados;
     document.getElementById('stat-kwp').textContent=EMPRESA.kwpInstalados;
     document.getElementById('stat-anos').textContent=EMPRESA.anosExperiencia+' anos';
-    loadSiteImages();
-    /* Esconde SVG do hero se imagem foi carregada */
-    const heroImg=document.getElementById('img-hero');
-    if(heroImg&&heroImg.src&&heroImg.src!==window.location.href){
-      const svg=document.getElementById('svg-hero');
-      if(svg)svg.style.display='none';
-    }
+    loadSiteImages().then(()=>{
+      /* Esconde SVG do hero se imagem foi carregada */
+      const heroImg=document.getElementById('img-hero');
+      if(heroImg&&heroImg.src&&heroImg.src!==window.location.href){
+        const svg=document.getElementById('svg-hero');
+        if(svg)svg.style.display='none';
+      }
+    });
   });
   window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60)},{passive:true});
   const hamburger=document.getElementById('hamburger');
