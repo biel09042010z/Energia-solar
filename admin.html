@@ -75,7 +75,7 @@
     .has-img .card-label::after{content:' ✓';color:var(--green)}
 
     /* TOAST */
-    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy-2);border:1px solid rgba(255,255,255,.12);color:var(--white);padding:12px 20px;border-radius:12px;font-size:.88rem;font-weight:600;box-shadow:var(--sh);transition:.35s;z-index:9999;pointer-events:none;white-space:nowrap}
+    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy-2);border:1px solid rgba(255,255,255,.12);color:var(--white);padding:12px 20px;border-radius:12px;font-size:.88rem;font-weight:600;box-shadow:var(--sh);transition:.35s;z-index:9999;pointer-events:none;max-width:90vw;white-space:pre-wrap;word-break:break-word}
     .toast.show{transform:translateX(-50%) translateY(0)}
     .toast.success{border-color:rgba(16,185,129,.5);color:#6ee7b7}
     .toast.error{border-color:rgba(239,68,68,.5);color:#fca5a5}
@@ -130,7 +130,7 @@
   <div class="admin-body">
     <div class="admin-header">
       <h1>Gerenciar Imagens</h1>
-      <p>Faça upload das fotos que aparecerão em cada seção do site. As imagens ficam salvas no dispositivo.</p>
+      <p>Faça upload das fotos que aparecerão em cada seção do site. As imagens ficam salvas no banco de dados.</p>
     </div>
 
     <!-- TABS -->
@@ -322,25 +322,48 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  /* ── Credenciais (salvas em localStorage) ── */
-  const DEFAULT_USER = 'joaogabrielsantoshilario05@gmail.com';
-  const DEFAULT_PASS = '09042010';
   let currentKey = null; // chave de imagem sendo editada
 
-  function getUser(){ return localStorage.getItem('sv_admin_user') || DEFAULT_USER }
-  function getPass(){ return localStorage.getItem('sv_admin_pass') || DEFAULT_PASS }
-
   /* ── Login / Logout ── */
-  function doLogin(){
-    const u = document.getElementById('login-user').value.trim();
-    const p = document.getElementById('login-pass').value;
-    if(u === getUser() && p === getPass()){
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('admin-panel').style.display  = 'block';
-      loadPreviews();
-    } else {
-      document.getElementById('login-err').style.display = 'block';
-      setTimeout(()=>{ document.getElementById('login-err').style.display='none' }, 3000);
+  async function doLogin(){
+    const email = document.getElementById('login-user').value.trim();
+    const senha = document.getElementById('login-pass').value;
+    const btn = document.querySelector('.btn-login');
+    const errBox = document.getElementById('login-err');
+    btn.disabled = true; btn.textContent = 'Entrando...';
+    try{
+      const resp = await fetch('/api/auth', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ email, senha })
+      });
+      const data = await parseResponse(resp);
+      if(data.ok){
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('admin-panel').style.display  = 'block';
+        loadPreviews();
+      } else {
+        errBox.textContent = data.error || `Usuário ou senha incorretos (HTTP ${resp.status})`;
+        errBox.style.display = 'block';
+      }
+    } catch(err){
+      errBox.textContent = 'Erro de conexão: ' + err.message;
+      errBox.style.display = 'block';
+    } finally {
+      btn.disabled = false; btn.textContent = '🔓 Entrar';
+    }
+  }
+
+  /* Lê a resposta como JSON; se não for JSON (ex: erro de servidor em HTML),
+     devolve o texto bruto para conseguirmos exibir algo útil na tela. */
+  async function parseResponse(resp){
+    const text = await resp.text();
+    try{
+      const data = JSON.parse(text);
+      if(!resp.ok && !data.error) data.error = `Erro HTTP ${resp.status}`;
+      return data;
+    } catch(e){
+      return { ok:false, error: `Resposta inesperada do servidor (HTTP ${resp.status}): ${text.slice(0,200)}` };
     }
   }
   function doLogout(){
@@ -368,12 +391,26 @@
     const file = e.target.files[0];
     if(!file) return;
     if(file.size > 3 * 1024 * 1024){ showToast('Imagem muito grande (máx. 3 MB)','error'); return; }
+    const key = currentKey;
     const reader = new FileReader();
-    reader.onload = function(ev){
+    reader.onload = async function(ev){
       const data = ev.target.result;
-      localStorage.setItem('sv_img_' + currentKey, data);
-      setPreview(currentKey, data);
-      showToast('✅ Imagem salva! Recarregue o site para ver.','success');
+      try{
+        const resp = await fetch('/api/images', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ key, dataUrl: data })
+        });
+        const result = await parseResponse(resp);
+        if(result.ok){
+          setPreview(key, data);
+          showToast('✅ Imagem salva! Recarregue o site para ver.','success');
+        } else {
+          showToast(result.error || 'Erro ao salvar imagem','error');
+        }
+      } catch(err){
+        showToast('Erro de conexão: ' + err.message,'error');
+      }
     };
     reader.readAsDataURL(file);
   }
@@ -389,9 +426,7 @@
     if(lbl && !lbl.textContent.includes('✓')) lbl.textContent += ' ✓';
   }
 
-  function removeImg(key){
-    if(!confirm('Remover esta imagem?')) return;
-    localStorage.removeItem('sv_img_' + key);
+  function clearPreview(key){
     const prev = document.getElementById('prev-' + key);
     const card = document.getElementById('card-' + key);
     const ph   = card ? card.querySelector('.preview-placeholder') : null;
@@ -399,22 +434,56 @@
     if(ph)  { ph.style.display='flex'; }
     const lbl = card ? card.querySelector('.card-label') : null;
     if(lbl)  { lbl.textContent = lbl.textContent.replace(' ✓',''); }
-    showToast('🗑️ Imagem removida','success');
   }
 
-  function clearAllImages(){
+  async function deleteImageKey(key){
+    try{
+      const resp = await fetch('/api/images', {
+        method: 'DELETE',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ key })
+      });
+      const data = await parseResponse(resp);
+      return data;
+    } catch(err){
+      return { ok:false, error: 'Erro de conexão: ' + err.message };
+    }
+  }
+
+  async function removeImg(key){
+    if(!confirm('Remover esta imagem?')) return;
+    const result = await deleteImageKey(key);
+    if(result.ok){
+      clearPreview(key);
+      showToast('🗑️ Imagem removida','success');
+    } else {
+      showToast(result.error || 'Erro ao remover imagem','error');
+    }
+  }
+
+  async function clearAllImages(){
     if(!confirm('Remover TODAS as imagens? Esta ação não pode ser desfeita.')) return;
     const keys=['hero','sobre','srv-projeto','srv-instalacao','srv-manutencao','srv-limpeza','srv-monitoramento','srv-homologacao','sol-residencial','sol-comercial','sol-rural'];
-    keys.forEach(k=>{ localStorage.removeItem('sv_img_'+k); removeImg(k); });
-    showToast('🗑️ Todas as imagens removidas','success');
+    let erro = null;
+    for(const k of keys){
+      const result = await deleteImageKey(k);
+      if(result.ok){ clearPreview(k); } else if(!erro){ erro = result.error; }
+    }
+    if(erro){ showToast(erro,'error'); } else { showToast('🗑️ Todas as imagens removidas','success'); }
   }
 
-  function loadPreviews(){
-    const keys=['hero','sobre','srv-projeto','srv-instalacao','srv-manutencao','srv-limpeza','srv-monitoramento','srv-homologacao','sol-residencial','sol-comercial','sol-rural'];
-    keys.forEach(k=>{
-      const data = localStorage.getItem('sv_img_'+k);
-      if(data) setPreview(k, data);
-    });
+  async function loadPreviews(){
+    try{
+      const resp = await fetch('/api/images');
+      const data = await parseResponse(resp);
+      if(data.ok){
+        Object.keys(data.images).forEach(k => setPreview(k, data.images[k]));
+      } else {
+        showToast(data.error || 'Erro ao carregar imagens salvas','error');
+      }
+    } catch(err){
+      showToast('Erro de conexão: ' + err.message,'error');
+    }
   }
 
   /* ── Toast ── */
@@ -423,7 +492,8 @@
     t.textContent = msg;
     t.className = 'toast ' + type;
     requestAnimationFrame(()=>{ t.classList.add('show'); });
-    setTimeout(()=>{ t.classList.remove('show'); }, 3000);
+    const duracao = type === 'error' ? 8000 : 3000;
+    setTimeout(()=>{ t.classList.remove('show'); }, duracao);
   }
 
   /* Enter no login */
