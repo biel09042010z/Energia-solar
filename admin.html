@@ -101,15 +101,17 @@
     </div>
     <div class="login-title">Painel Administrativo</div>
     <div class="login-sub">Acesso restrito — informe suas credenciais</div>
-    <div class="field">
-      <label>E-mail</label>
-      <input type="email" id="login-user" placeholder="seu@email.com" autocomplete="username"/>
-    </div>
-    <div class="field">
-      <label>Senha</label>
-      <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
-    </div>
-    <button class="btn-login" onclick="doLogin()">🔓 Entrar</button>
+    <form id="login-form" onsubmit="event.preventDefault(); doLogin();">
+      <div class="field">
+        <label>E-mail</label>
+        <input type="email" id="login-user" name="email" placeholder="seu@email.com" autocomplete="username" required/>
+      </div>
+      <div class="field">
+        <label>Senha</label>
+        <input type="password" id="login-pass" name="password" placeholder="••••••••" autocomplete="current-password" required/>
+      </div>
+      <button type="submit" class="btn-login">🔓 Entrar</button>
+    </form>
     <div class="login-err" id="login-err">Usuário ou senha incorretos.</div>
   </div>
 </div>
@@ -136,7 +138,6 @@
     <!-- TABS -->
     <div class="tabs">
       <button class="tab active" onclick="showTab('tab-hero',this)">🏠 Hero</button>
-      <button class="tab" onclick="showTab('tab-sobre',this)">🏢 Sobre</button>
       <button class="tab" onclick="showTab('tab-servicos',this)">🔧 Serviços</button>
       <button class="tab" onclick="showTab('tab-solucoes',this)">☀️ Soluções</button>
       <button class="tab" onclick="showTab('tab-config',this)">⚙️ Config</button>
@@ -157,27 +158,6 @@
             <div class="card-actions">
               <button class="btn-upload" onclick="triggerUpload('hero')">📷 Enviar foto</button>
               <button class="btn-remove" onclick="removeImg('hero')">🗑️</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB SOBRE -->
-    <div id="tab-sobre" class="tab-content">
-      <div class="upload-grid">
-        <div class="upload-card" id="card-sobre">
-          <div class="card-preview" onclick="triggerUpload('sobre')">
-            <img id="prev-sobre" src="" alt="" style="display:none"/>
-            <div class="preview-placeholder"><span>🏢</span>Clique para trocar</div>
-            <div class="preview-overlay"><div class="preview-overlay-txt">📷 Trocar imagem</div></div>
-          </div>
-          <div class="card-body">
-            <div class="card-label">Foto da Empresa (Sobre)</div>
-            <div class="card-desc">Foto que aparece na seção "Nossa história".</div>
-            <div class="card-actions">
-              <button class="btn-upload" onclick="triggerUpload('sobre')">📷 Enviar foto</button>
-              <button class="btn-remove" onclick="removeImg('sobre')">🗑️</button>
             </div>
           </div>
         </div>
@@ -345,7 +325,6 @@
       });
       const data = await parseResponse(resp);
       if(data.ok){
-        localStorage.setItem('sv_admin_logged', '1');
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('admin-panel').style.display  = 'block';
         loadPreviews();
@@ -374,7 +353,6 @@
     }
   }
   function doLogout(){
-    localStorage.removeItem('sv_admin_logged');
     document.getElementById('admin-panel').style.display  = 'none';
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('login-pass').value = '';
@@ -471,7 +449,7 @@
 
   async function clearAllImages(){
     if(!confirm('Remover TODAS as imagens? Esta ação não pode ser desfeita.')) return;
-    const keys=['hero','sobre','srv-projeto','srv-instalacao','srv-manutencao','srv-limpeza','srv-monitoramento','srv-homologacao','sol-residencial','sol-comercial','sol-rural'];
+    const keys=['hero','srv-projeto','srv-instalacao','srv-manutencao','srv-limpeza','srv-monitoramento','srv-homologacao','sol-residencial','sol-comercial','sol-rural'];
     let erro = null;
     for(const k of keys){
       const result = await deleteImageKey(k);
@@ -534,15 +512,10 @@
     setTimeout(()=>{ t.classList.remove('show'); }, duracao);
   }
 
-  /* Enter no login */
-  document.getElementById('login-user').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('login-pass').focus(); });
-
-  /* Se já havia uma sessão ativa nesta aba/navegador, pula direto pro painel */
-  if(localStorage.getItem('sv_admin_logged') === '1'){
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('admin-panel').style.display  = 'block';
-    loadPreviews();
-  }
+  /* Enter no campo de e-mail: pula para o campo de senha em vez de enviar o form direto */
+  document.getElementById('login-user').addEventListener('keydown', e=>{
+    if(e.key==='Enter'){ e.preventDefault(); document.getElementById('login-pass').focus(); }
+  });
 </script>
 </body>
 </html>

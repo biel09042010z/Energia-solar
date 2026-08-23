@@ -86,7 +86,6 @@
     .sec-img-wrap{width:100%;overflow:hidden;border-radius:var(--r-xl);position:relative}
     .sec-img-inner{width:100%;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
     .sec-img-inner img.site-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:var(--r-xl)}
-    .sec-img-inner .emoji-fallback{font-size:5rem;position:relative;z-index:1}
     .sec-img-inner.sobre-bg{background:linear-gradient(135deg,var(--navy) 0%,#1a3a5c 100%)}
     .sobre-badge-wrap{position:absolute;bottom:24px;left:24px;background:var(--amber);color:var(--navy);border-radius:var(--r-md);padding:14px 20px;font-weight:700;box-shadow:var(--shadow-md);z-index:2}
     .sobre-badge-num{font-family:var(--font-display);font-size:2rem;font-weight:800;line-height:1}
@@ -98,12 +97,10 @@
     .solucao-img.comercial{background:linear-gradient(135deg,#1a4030,#0a2a1e)}
     .solucao-img.rural{background:linear-gradient(135deg,#3a2a0a,#2a1a00)}
     .solucao-img img.site-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-    .solucao-img .emoji-fallback{position:relative;z-index:1}
 
     /* Cards de serviço com imagem */
     .service-card-img{height:140px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:-28px -24px 20px;border-radius:var(--r-lg) var(--r-lg) 0 0;overflow:hidden;background:rgba(0,0,0,.2);position:relative}
     .service-card-img img.site-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-    .service-card-img .emoji-fallback{position:relative;z-index:1}
 
     .hero-float-card{position:absolute;background:var(--white);border-radius:var(--r-md);padding:14px 18px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:12px}
     .hero-float-card.card-1{bottom:-16px;left:-20px}
@@ -280,13 +277,13 @@
 <body>
 
 <script>
-  const EMPRESA={nome:"SolarVida Energia",whatsapp:"5586999990000",email:"contato@solarvida.com.br",telefone:"(86) 99999-0000",endereco:"Av. Frei Serafim, 2510 – Centro, Teresina – PI",horario:"Seg–Sex: 8h–18h | Sáb: 8h–12h",instagram:"https://instagram.com/solarvidaenergia",facebook:"https://facebook.com/solarvidaenergia",youtube:"https://youtube.com/@solarvidaenergia",projetosRealizados:"500+",kwpInstalados:"4.200+",anosExperiencia:"8"};
+  const EMPRESA={nome:"SolarVida Energia",whatsapp:"5589981225667",email:"contato@solarvida.com.br",telefone:"(89) 98122-5667",endereco:"Av. Frei Serafim, 2510 – Centro, Teresina – PI",horario:"Seg–Sex: 8h–18h | Sáb: 8h–12h",instagram:"https://instagram.com/solarvidaenergia",facebook:"https://facebook.com/solarvidaenergia",youtube:"https://youtube.com/@solarvidaenergia",projetosRealizados:"500+",kwpInstalados:"4.200+",anosExperiencia:"8"};
   function waLink(m){return`https://wa.me/${EMPRESA.whatsapp}?text=${encodeURIComponent(m)}`}
 
   /* ── Carrega imagens salvas pelo admin (agora vindas do banco de dados) ── */
   async function loadSiteImages(){
     const imgs={
-      'hero':'img-hero','sobre':'img-sobre',
+      'hero':'img-hero',
       'srv-projeto':'img-srv-projeto','srv-instalacao':'img-srv-instalacao',
       'srv-manutencao':'img-srv-manutencao','srv-limpeza':'img-srv-limpeza',
       'srv-monitoramento':'img-srv-monitoramento','srv-homologacao':'img-srv-homologacao',
@@ -299,7 +296,10 @@
       Object.entries(imgs).forEach(([key,id])=>{
         const data=result.images[key];
         const el=document.getElementById(id);
-        if(data&&el){el.src=data;el.style.display='block'}
+        if(data&&el){
+          el.src=data;
+          el.style.display='block';
+        }
       });
     }catch(err){
       console.error('Erro ao carregar imagens do site:',err);
@@ -314,7 +314,6 @@
       <a href="#inicio" class="nav-logo"><div class="nav-logo-icon">☀️</div><span>SolarVida</span></a>
       <ul class="nav-links">
         <li><a href="#simulador">Simulador</a></li>
-        <li><a href="#sobre">Sobre</a></li>
         <li><a href="#servicos">Serviços</a></li>
         <li><a href="#solucoes">Soluções</a></li>
         <li><a href="#como-funciona">Como funciona</a></li>
@@ -331,7 +330,6 @@
 </nav>
 <nav class="mobile-menu" id="mobile-menu">
   <a href="#simulador" onclick="closeMobile()">Simulador</a>
-  <a href="#sobre" onclick="closeMobile()">Sobre</a>
   <a href="#servicos" onclick="closeMobile()">Serviços</a>
   <a href="#solucoes" onclick="closeMobile()">Soluções</a>
   <a href="#como-funciona" onclick="closeMobile()">Como funciona</a>
@@ -447,31 +445,7 @@
   </div>
 </section>
 
-<!-- SOBRE -->
-<section id="sobre" class="section">
-  <div class="container">
-    <div class="sobre-grid">
-      <div class="sec-img-wrap" style="position:relative">
-        <div class="sec-img-inner sobre-bg">
-          <img id="img-sobre" class="site-img" src="" alt="Sobre a SolarVida" style="display:none" />
-          <span class="emoji-fallback">☀️</span>
-        </div>
-        <div class="sobre-badge-wrap"><div class="sobre-badge-num">8+</div><div class="sobre-badge-txt">anos de experiência</div></div>
-      </div>
-      <div>
-        <div class="badge">Nossa história</div>
-        <h2 class="section-title">Pioneiros em energia solar no Piauí</h2>
-        <p class="section-subtitle" style="margin-bottom:28px">Fundada em 2016, a SolarVida nasceu com o propósito de democratizar o acesso à energia solar no Nordeste. Hoje somos referência com mais de 500 instalações entregues em todo o Piauí e Maranhão.</p>
-        <div class="sobre-items">
-          <div class="sobre-item"><div class="sobre-item-icon">📍</div><div><h4>Região de Atendimento</h4><p>Atendemos todo o Piauí e Maranhão, com equipes próprias em Teresina, Parnaíba, Picos e São Luís.</p></div></div>
-          <div class="sobre-item"><div class="sobre-item-icon">🏆</div><div><h4>Certificações & Diferenciais</h4><p>Empresa certificada pela ABSOLAR. Engenheiros especializados e instaladores credenciados pelo CREA-PI.</p></div></div>
-          <div class="sobre-item"><div class="sobre-item-icon">🔧</div><div><h4>Suporte Completo</h4><p>Da análise técnica à homologação — acompanhamos você em cada etapa do processo.</p></div></div>
-          <div class="sobre-item"><div class="sobre-item-icon">🤝</div><div><h4>Pós-venda e Garantia</h4><p>Monitoramento remoto, manutenção preventiva e garantia de até 25 anos nos módulos.</p></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+
 
 <!-- SERVIÇOS -->
 <section id="servicos" class="section section-dark">
@@ -483,27 +457,27 @@
     </div>
     <div class="services-grid">
       <div class="service-card">
-        <div class="service-card-img"><img id="img-srv-projeto" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">📐</span></div>
+        <div class="service-card-img"><img id="img-srv-projeto" class="site-img" src="" alt="" style="display:none"/></div>
         <h3>Projeto Técnico</h3><p>Dimensionamento personalizado com base no seu consumo e nas características do telhado.</p>
       </div>
       <div class="service-card">
-        <div class="service-card-img"><img id="img-srv-instalacao" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">🔨</span></div>
+        <div class="service-card-img"><img id="img-srv-instalacao" class="site-img" src="" alt="" style="display:none"/></div>
         <h3>Instalação</h3><p>Equipe técnica especializada instala seus painéis, inversor e cabeamento com segurança.</p>
       </div>
       <div class="service-card">
-        <div class="service-card-img"><img id="img-srv-manutencao" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">🔧</span></div>
+        <div class="service-card-img"><img id="img-srv-manutencao" class="site-img" src="" alt="" style="display:none"/></div>
         <h3>Manutenção</h3><p>Inspeção preventiva periódica para garantir máxima eficiência e prolongar a vida útil.</p>
       </div>
       <div class="service-card">
-        <div class="service-card-img"><img id="img-srv-limpeza" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">🧹</span></div>
+        <div class="service-card-img"><img id="img-srv-limpeza" class="site-img" src="" alt="" style="display:none"/></div>
         <h3>Limpeza dos Módulos</h3><p>Painéis limpos geram até 30% a mais de energia. Limpeza técnica sem risco de danos.</p>
       </div>
       <div class="service-card">
-        <div class="service-card-img"><img id="img-srv-monitoramento" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">📊</span></div>
+        <div class="service-card-img"><img id="img-srv-monitoramento" class="site-img" src="" alt="" style="display:none"/></div>
         <h3>Monitoramento</h3><p>Acompanhe a geração em tempo real pelo aplicativo. Identificamos falhas antes de você notar.</p>
       </div>
       <div class="service-card">
-        <div class="service-card-img"><img id="img-srv-homologacao" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">📋</span></div>
+        <div class="service-card-img"><img id="img-srv-homologacao" class="site-img" src="" alt="" style="display:none"/></div>
         <h3>Homologação ANEEL</h3><p>Cuidamos de toda a burocracia com a distribuidora local para conexão à rede elétrica.</p>
       </div>
     </div>
@@ -520,15 +494,15 @@
     </div>
     <div class="solucoes-grid">
       <article class="solucao-card">
-        <div class="solucao-img residencial"><img id="img-sol-residencial" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">🏠</span></div>
+        <div class="solucao-img residencial"><img id="img-sol-residencial" class="site-img" src="" alt="" style="display:none"/></div>
         <div class="solucao-body"><h3>Residencial</h3><p>Reduza até 95% da sua conta de luz. Projetos a partir de 2 kWp para casas e apartamentos.</p><div class="solucao-tags"><span class="solucao-tag">Casa</span><span class="solucao-tag">Apartamento</span><span class="solucao-tag">Condomínio</span></div></div>
       </article>
       <article class="solucao-card">
-        <div class="solucao-img comercial"><img id="img-sol-comercial" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">🏢</span></div>
+        <div class="solucao-img comercial"><img id="img-sol-comercial" class="site-img" src="" alt="" style="display:none"/></div>
         <div class="solucao-body"><h3>Comercial</h3><p>Reduza custos operacionais e melhore a margem do seu negócio com energia limpa e estável.</p><div class="solucao-tags"><span class="solucao-tag">Comércio</span><span class="solucao-tag">Indústria</span><span class="solucao-tag">Hospital</span></div></div>
       </article>
       <article class="solucao-card">
-        <div class="solucao-img rural"><img id="img-sol-rural" class="site-img" src="" alt="" style="display:none"/><span class="emoji-fallback">🌾</span></div>
+        <div class="solucao-img rural"><img id="img-sol-rural" class="site-img" src="" alt="" style="display:none"/></div>
         <div class="solucao-body"><h3>Rural</h3><p>Bombeamento solar, irrigação e eletrificação rural. Energia onde a rede elétrica não chega.</p><div class="solucao-tags"><span class="solucao-tag">Fazenda</span><span class="solucao-tag">Irrigação</span><span class="solucao-tag">Off-grid</span></div></div>
       </article>
     </div>
@@ -596,7 +570,7 @@
       <div>
         <div class="contato-items">
           <div class="contato-item"><div class="contato-item-icon">📲</div><a href="#" id="wa-contato-link">Chamar no WhatsApp</a></div>
-          <div class="contato-item"><div class="contato-item-icon">📞</div><a href="#" id="tel-contato-link">(86) 99999-0000</a></div>
+          <div class="contato-item"><div class="contato-item-icon">📞</div><a href="#" id="tel-contato-link">(89) 98122-5667</a></div>
           <div class="contato-item"><div class="contato-item-icon">✉️</div><a href="#" id="email-contato-link">contato@solarvida.com.br</a></div>
           <div class="contato-item"><div class="contato-item-icon">📍</div><span id="endereco-display">Av. Frei Serafim, 2510 – Centro<br>Teresina – PI</span></div>
           <div class="contato-item"><div class="contato-item-icon">🕐</div><span id="horario-display">Seg–Sex: 8h–18h | Sáb: 8h–12h</span></div>
@@ -634,7 +608,7 @@
       </div>
       <div class="footer-col"><h4>Serviços</h4><ul><li><a href="#servicos">Projeto Técnico</a></li><li><a href="#servicos">Instalação</a></li><li><a href="#servicos">Manutenção</a></li><li><a href="#servicos">Limpeza</a></li><li><a href="#servicos">Monitoramento</a></li><li><a href="#servicos">Homologação</a></li></ul></div>
       <div class="footer-col"><h4>Soluções</h4><ul><li><a href="#solucoes">Residencial</a></li><li><a href="#solucoes">Comercial</a></li><li><a href="#solucoes">Rural</a></li><li><a href="#simulador">Simulador</a></li></ul></div>
-      <div class="footer-col"><h4>Contato</h4><ul><li><a href="#" id="footer-tel">(86) 99999-0000</a></li><li><a href="#" id="footer-email">contato@solarvida.com.br</a></li><li><a href="#contato">Solicitar Orçamento</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+      <div class="footer-col"><h4>Contato</h4><ul><li><a href="#" id="footer-tel">(89) 98122-5667</a></li><li><a href="#" id="footer-email">contato@solarvida.com.br</a></li><li><a href="#contato">Solicitar Orçamento</a></li><li><a href="#faq">FAQ</a></li></ul></div>
     </div>
     <div class="footer-bottom">
       <span>© 2024 SolarVida Energia. Todos os direitos reservados.</span>
@@ -649,7 +623,7 @@
   <div class="wa-bubble">Posso te ajudar com seu projeto solar? 😊</div>
   <div style="position:relative">
     <div class="wa-pulse"></div>
-    <a href="#" id="wa-float-btn" class="wa-btn" target="_blank" rel="noopener">📲</a>
+    <a href="#" id="wa-float-btn" class="wa-btn" target="_blank" rel="noopener"><img src="data:image/png;base64,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" alt="WhatsApp" style="width:32px;height:32px;display:block"/></a>
   </div>
 </div>
 
