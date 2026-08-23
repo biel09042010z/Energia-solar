@@ -339,6 +339,7 @@
       });
       const data = await parseResponse(resp);
       if(data.ok){
+        sessionStorage.setItem('sv_admin_logged', '1');
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('admin-panel').style.display  = 'block';
         loadPreviews();
@@ -367,6 +368,7 @@
     }
   }
   function doLogout(){
+    sessionStorage.removeItem('sv_admin_logged');
     document.getElementById('admin-panel').style.display  = 'none';
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('login-pass').value = '';
@@ -498,6 +500,13 @@
 
   /* Enter no login */
   document.getElementById('login-user').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('login-pass').focus(); });
+
+  /* Se já havia uma sessão ativa nesta aba/navegador, pula direto pro painel */
+  if(sessionStorage.getItem('sv_admin_logged') === '1'){
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-panel').style.display  = 'block';
+    loadPreviews();
+  }
 </script>
 </body>
 </html>
