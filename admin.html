@@ -71,6 +71,8 @@
     .btn-upload{flex:1;padding:9px;background:var(--amber);color:var(--navy);border:none;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;transition:.2s;text-align:center}
     .btn-upload:hover{background:var(--amber-d)}
     .btn-remove{padding:9px 12px;background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.3);border-radius:8px;font-size:.8rem;cursor:pointer;transition:.2s}
+    .hide-toggle{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:.82rem;color:rgba(255,255,255,.6);cursor:pointer;user-select:none}
+    .hide-toggle input{width:16px;height:16px;accent-color:var(--amber);cursor:pointer}
     .btn-remove:hover{background:rgba(239,68,68,.25)}
     .has-img .card-label::after{content:' ✓';color:var(--green)}
 
@@ -124,7 +126,7 @@
       Admin · SolarVida
     </div>
     <div class="topbar-right">
-      <a href="index.html" class="btn-sm outline" target="_blank">👁️ Ver site</a>
+      <a href="index.html" class="btn-sm outline">👁️ Ver site</a>
       <button class="btn-sm danger" onclick="doLogout()">🚪 Sair</button>
     </div>
   </div>
@@ -176,7 +178,7 @@
           <div class="card-body">
             <div class="card-label">Projeto Técnico</div>
             <div class="card-desc">Foto para o card de Projeto Técnico.</div>
-            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-projeto')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-projeto')">🗑️</button></div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-projeto')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-projeto')">🗑️</button></div><label class="hide-toggle"><input type="checkbox" data-key="srv-projeto" onchange="toggleHidden(this)"/> Ocultar esta categoria do site</label>
           </div>
         </div>
         <div class="upload-card" id="card-srv-instalacao">
@@ -188,7 +190,7 @@
           <div class="card-body">
             <div class="card-label">Instalação</div>
             <div class="card-desc">Foto de instalação de painéis.</div>
-            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-instalacao')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-instalacao')">🗑️</button></div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-instalacao')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-instalacao')">🗑️</button></div><label class="hide-toggle"><input type="checkbox" data-key="srv-instalacao" onchange="toggleHidden(this)"/> Ocultar esta categoria do site</label>
           </div>
         </div>
         <div class="upload-card" id="card-srv-manutencao">
@@ -200,7 +202,7 @@
           <div class="card-body">
             <div class="card-label">Manutenção</div>
             <div class="card-desc">Foto de manutenção do sistema solar.</div>
-            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-manutencao')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-manutencao')">🗑️</button></div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-manutencao')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-manutencao')">🗑️</button></div><label class="hide-toggle"><input type="checkbox" data-key="srv-manutencao" onchange="toggleHidden(this)"/> Ocultar esta categoria do site</label>
           </div>
         </div>
         <div class="upload-card" id="card-srv-limpeza">
@@ -212,7 +214,7 @@
           <div class="card-body">
             <div class="card-label">Limpeza dos Módulos</div>
             <div class="card-desc">Foto de limpeza dos painéis solares.</div>
-            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-limpeza')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-limpeza')">🗑️</button></div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-limpeza')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-limpeza')">🗑️</button></div><label class="hide-toggle"><input type="checkbox" data-key="srv-limpeza" onchange="toggleHidden(this)"/> Ocultar esta categoria do site</label>
           </div>
         </div>
         <div class="upload-card" id="card-srv-monitoramento">
@@ -224,7 +226,7 @@
           <div class="card-body">
             <div class="card-label">Monitoramento</div>
             <div class="card-desc">Foto para o card de monitoramento.</div>
-            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-monitoramento')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-monitoramento')">🗑️</button></div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-monitoramento')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-monitoramento')">🗑️</button></div><label class="hide-toggle"><input type="checkbox" data-key="srv-monitoramento" onchange="toggleHidden(this)"/> Ocultar esta categoria do site</label>
           </div>
         </div>
         <div class="upload-card" id="card-srv-homologacao">
@@ -236,10 +238,11 @@
           <div class="card-body">
             <div class="card-label">Homologação ANEEL</div>
             <div class="card-desc">Foto para o card de homologação.</div>
-            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-homologacao')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-homologacao')">🗑️</button></div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('srv-homologacao')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('srv-homologacao')">🗑️</button></div><label class="hide-toggle"><input type="checkbox" data-key="srv-homologacao" onchange="toggleHidden(this)"/> Ocultar esta categoria do site</label>
           </div>
         </div>
       </div>
+      <button class="btn-upload" style="width:100%;padding:14px;font-size:.95rem;margin-top:18px" onclick="salvarVisibilidade()">💾 Salvar alterações</button>
     </div>
 
     <!-- TAB SOLUÇÕES -->
@@ -254,7 +257,7 @@
           <div class="card-body">
             <div class="card-label">Solução Residencial</div>
             <div class="card-desc">Foto do card de solução residencial.</div>
-            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('sol-residencial')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('sol-residencial')">🗑️</button></div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('sol-residencial')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('sol-residencial')">🗑️</button></div><label class="hide-toggle"><input type="checkbox" data-key="sol-residencial" onchange="toggleHidden(this)"/> Ocultar esta categoria do site</label>
           </div>
         </div>
         <div class="upload-card" id="card-sol-comercial">
@@ -266,7 +269,7 @@
           <div class="card-body">
             <div class="card-label">Solução Comercial</div>
             <div class="card-desc">Foto do card de solução comercial.</div>
-            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('sol-comercial')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('sol-comercial')">🗑️</button></div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('sol-comercial')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('sol-comercial')">🗑️</button></div><label class="hide-toggle"><input type="checkbox" data-key="sol-comercial" onchange="toggleHidden(this)"/> Ocultar esta categoria do site</label>
           </div>
         </div>
         <div class="upload-card" id="card-sol-rural">
@@ -278,10 +281,11 @@
           <div class="card-body">
             <div class="card-label">Solução Rural</div>
             <div class="card-desc">Foto do card de solução rural.</div>
-            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('sol-rural')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('sol-rural')">🗑️</button></div>
+            <div class="card-actions"><button class="btn-upload" onclick="triggerUpload('sol-rural')">📷 Enviar</button><button class="btn-remove" onclick="removeImg('sol-rural')">🗑️</button></div><label class="hide-toggle"><input type="checkbox" data-key="sol-rural" onchange="toggleHidden(this)"/> Ocultar esta categoria do site</label>
           </div>
         </div>
       </div>
+      <button class="btn-upload" style="width:100%;padding:14px;font-size:.95rem;margin-top:18px" onclick="salvarVisibilidade()">💾 Salvar alterações</button>
     </div>
 
     <!-- TAB CONFIG -->
@@ -466,6 +470,52 @@
         Object.keys(data.images).forEach(k => setPreview(k, data.images[k]));
       } else {
         showToast(data.error || 'Erro ao carregar imagens salvas','error');
+      }
+    } catch(err){
+      showToast('Erro de conexão: ' + err.message,'error');
+    }
+    loadVisibility();
+  }
+
+  /* ── Ocultar/mostrar categorias ── */
+  let pendingVisibility = {};
+
+  async function loadVisibility(){
+    try{
+      const resp = await fetch('/api/visibility');
+      const data = await parseResponse(resp);
+      if(data.ok){
+        document.querySelectorAll('.hide-toggle input[data-key]').forEach(chk=>{
+          const key = chk.dataset.key;
+          chk.checked = !!data.hidden[key];
+        });
+      }
+    } catch(err){
+      showToast('Erro ao carregar visibilidade: ' + err.message,'error');
+    }
+  }
+
+  function toggleHidden(checkbox){
+    pendingVisibility[checkbox.dataset.key] = checkbox.checked;
+  }
+
+  async function salvarVisibilidade(){
+    if(Object.keys(pendingVisibility).length === 0){
+      showToast('Nenhuma alteração para salvar','success');
+      return;
+    }
+    try{
+      const resp = await fetch('/api/visibility', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ changes: pendingVisibility })
+      });
+      const data = await parseResponse(resp);
+      if(data.ok){
+        showToast('✅ Alterações salvas! Recarregue o site para ver.','success');
+        pendingVisibility = {};
+      } else {
+        showToast(data.error || 'Erro ao salvar alterações','error');
       }
     } catch(err){
       showToast('Erro de conexão: ' + err.message,'error');
