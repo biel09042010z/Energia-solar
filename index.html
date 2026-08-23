@@ -304,6 +304,20 @@
     }catch(err){
       console.error('Erro ao carregar imagens do site:',err);
     }
+  }  /* ── Esconde categorias marcadas como ocultas pelo admin ── */
+  async function loadSectionVisibility(){
+    try{
+      const resp=await fetch('/api/visibility');
+      const result=await resp.json();
+      if(!result.ok) return;
+      Object.entries(result.hidden).forEach(([key,isHidden])=>{
+        if(!isHidden) return;
+        const card=document.getElementById('card-'+key);
+        if(card) card.style.display='none';
+      });
+    }catch(err){
+      console.error('Erro ao carregar visibilidade das categorias:',err);
+    }
   }
 </script>
 
@@ -456,27 +470,27 @@
       <p class="section-subtitle">Cuidamos de tudo para você aproveitar a economia sem preocupação.</p>
     </div>
     <div class="services-grid">
-      <div class="service-card">
+      <div class="service-card" id="card-srv-projeto">
         <div class="service-card-img"><img id="img-srv-projeto" class="site-img" src="" alt="" style="display:none"/></div>
         <h3>Projeto Técnico</h3><p>Dimensionamento personalizado com base no seu consumo e nas características do telhado.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card" id="card-srv-instalacao">
         <div class="service-card-img"><img id="img-srv-instalacao" class="site-img" src="" alt="" style="display:none"/></div>
         <h3>Instalação</h3><p>Equipe técnica especializada instala seus painéis, inversor e cabeamento com segurança.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card" id="card-srv-manutencao">
         <div class="service-card-img"><img id="img-srv-manutencao" class="site-img" src="" alt="" style="display:none"/></div>
         <h3>Manutenção</h3><p>Inspeção preventiva periódica para garantir máxima eficiência e prolongar a vida útil.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card" id="card-srv-limpeza">
         <div class="service-card-img"><img id="img-srv-limpeza" class="site-img" src="" alt="" style="display:none"/></div>
         <h3>Limpeza dos Módulos</h3><p>Painéis limpos geram até 30% a mais de energia. Limpeza técnica sem risco de danos.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card" id="card-srv-monitoramento">
         <div class="service-card-img"><img id="img-srv-monitoramento" class="site-img" src="" alt="" style="display:none"/></div>
         <h3>Monitoramento</h3><p>Acompanhe a geração em tempo real pelo aplicativo. Identificamos falhas antes de você notar.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card" id="card-srv-homologacao">
         <div class="service-card-img"><img id="img-srv-homologacao" class="site-img" src="" alt="" style="display:none"/></div>
         <h3>Homologação ANEEL</h3><p>Cuidamos de toda a burocracia com a distribuidora local para conexão à rede elétrica.</p>
       </div>
@@ -493,15 +507,15 @@
       <p class="section-subtitle">Projetos dimensionados para residências, empresas e produções rurais.</p>
     </div>
     <div class="solucoes-grid">
-      <article class="solucao-card">
+      <article class="solucao-card" id="card-sol-residencial">
         <div class="solucao-img residencial"><img id="img-sol-residencial" class="site-img" src="" alt="" style="display:none"/></div>
         <div class="solucao-body"><h3>Residencial</h3><p>Reduza até 95% da sua conta de luz. Projetos a partir de 2 kWp para casas e apartamentos.</p><div class="solucao-tags"><span class="solucao-tag">Casa</span><span class="solucao-tag">Apartamento</span><span class="solucao-tag">Condomínio</span></div></div>
       </article>
-      <article class="solucao-card">
+      <article class="solucao-card" id="card-sol-comercial">
         <div class="solucao-img comercial"><img id="img-sol-comercial" class="site-img" src="" alt="" style="display:none"/></div>
         <div class="solucao-body"><h3>Comercial</h3><p>Reduza custos operacionais e melhore a margem do seu negócio com energia limpa e estável.</p><div class="solucao-tags"><span class="solucao-tag">Comércio</span><span class="solucao-tag">Indústria</span><span class="solucao-tag">Hospital</span></div></div>
       </article>
-      <article class="solucao-card">
+      <article class="solucao-card" id="card-sol-rural">
         <div class="solucao-img rural"><img id="img-sol-rural" class="site-img" src="" alt="" style="display:none"/></div>
         <div class="solucao-body"><h3>Rural</h3><p>Bombeamento solar, irrigação e eletrificação rural. Energia onde a rede elétrica não chega.</p><div class="solucao-tags"><span class="solucao-tag">Fazenda</span><span class="solucao-tag">Irrigação</span><span class="solucao-tag">Off-grid</span></div></div>
       </article>
@@ -660,6 +674,7 @@
         if(svg)svg.style.display='none';
       }
     });
+    loadSectionVisibility();
   });
   window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60)},{passive:true});
   const hamburger=document.getElementById('hamburger');
